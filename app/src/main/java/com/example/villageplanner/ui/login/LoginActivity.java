@@ -26,15 +26,20 @@ import com.example.villageplanner.R;
 import com.example.villageplanner.ui.login.LoginViewModel;
 import com.example.villageplanner.ui.login.LoginViewModelFactory;
 import com.example.villageplanner.databinding.ActivityLoginPageBinding;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginPageBinding binding;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
 
         binding = ActivityLoginPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -46,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -124,6 +132,16 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            reload();
+        }
+    }
+
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
@@ -133,4 +151,7 @@ public class LoginActivity extends AppCompatActivity {
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
+
+
+    private void reload() { }
 }
