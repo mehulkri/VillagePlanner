@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.net.wifi.hotspot2.pps.Credential;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -37,6 +39,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -69,9 +73,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize Google Sign In
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                        .build();
+                .requestIdToken("13884664186-70mj7pf99jb7kqkp3tte2hf66ln3qo89.apps.googleusercontent.com")
+                    .requestEmail()
+                    .build();
         gsc = GoogleSignIn.getClient(this, gso);
+
+
+
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -169,11 +177,17 @@ public class LoginActivity extends AppCompatActivity {
 
         if (requestCode == 100) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                task.getResult(ApiException.class);
-                System.out.println("Sucess");
-            } catch (ApiException e) {
-                System.out.println("Fail");
+            Exception exception = task.getException();
+            if(task.isSuccessful()) {
+                try {
+                    task.getResult(ApiException.class);
+                   // Credential credential = GoogleAuthProvider.getCredential();
+                    System.out.println("Sucess");
+                } catch (ApiException e) {
+                    System.out.println("Fail");
+                }
+            } else {
+                Log.w("SignInActivity", exception.toString());
             }
         }
     }
