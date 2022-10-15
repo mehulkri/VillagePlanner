@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -23,9 +24,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.villageplanner.R;
-import com.example.villageplanner.ui.login.LoginViewModel;
-import com.example.villageplanner.ui.login.LoginViewModelFactory;
 import com.example.villageplanner.databinding.ActivityLoginPageBinding;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private ActivityLoginPageBinding binding;
     private FirebaseAuth mAuth;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,10 +60,18 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
+        final SignInButton googleLogin = binding.googleLogin;
+        final Button createAccount = binding.createAccount;
         final ProgressBar loadingProgressBar = binding.loading;
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        // Initialize Google Sign In
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                        .build();
+        gsc = GoogleSignIn.getClient(this, gso);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -130,6 +148,34 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
+
+        googleLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                googleSignIn();
+            }
+        });
+    }
+
+    private void googleSignIn() {
+        Intent intent = gsc.getSignInIntent();
+        startActivityForResult(intent, 100);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                System.out.println("Sucess");
+            } catch (ApiException e) {
+                System.out.println("Fail");
+            }
+        }
     }
 
     @Override
@@ -138,6 +184,7 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
+            // TODO: redirect to homepage if already logged in
             reload();
         }
     }
