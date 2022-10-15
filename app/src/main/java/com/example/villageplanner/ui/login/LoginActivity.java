@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.villageplanner.CreateAccount;
 import com.example.villageplanner.R;
 import com.example.villageplanner.databinding.ActivityLoginPageBinding;
 import com.google.android.gms.auth.api.identity.SignInClient;
@@ -147,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        // Normal Login
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,11 +157,21 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
-
+        // Google Login
         googleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 googleSignIn();
+            }
+        });
+
+        // Create Account
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent create = new Intent(LoginActivity.this , CreateAccount.class);
+                startActivity(create);
+
             }
         });
     }

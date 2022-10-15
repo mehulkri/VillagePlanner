@@ -6,6 +6,7 @@ plugins {
 android {
     compileSdk 33
 
+
     defaultConfig {
         applicationId "com.example.villageplanner"
         minSdk 24
@@ -48,5 +49,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.0.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database'
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
 
 }
