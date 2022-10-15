@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "13884664186",
+    "project_id": "villageplanner-bdcd0",
+    "storage_bucket": "villageplanner-bdcd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13884664186:android:ba237bca845eb1e5fb4ec3",
+        "android_client_info": {
+          "package_name": "com.example.villageplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13884664186-70mj7pf99jb7kqkp3tte2hf66ln3qo89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.villageplanner",
+            "certificate_hash": "aa2d7a0f9085ccc35b9b268f0737317633fc407f"
+          }
+        },
+        {
+          "client_id": "13884664186-jio0t4op7fhv9sahqmahclqr4lamenvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGRU8M7ZE32B9NhJvGSaPzQbRQ-py_tEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13884664186-jio0t4op7fhv9sahqmahclqr4lamenvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
