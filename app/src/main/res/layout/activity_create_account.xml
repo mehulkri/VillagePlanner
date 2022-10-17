@@ -4,81 +4,124 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateAccount">
+    tools:context=".createAccount.CreateAccount">
+
+    <Button
+        android:id="@+id/backToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Login"
+        app:backgroundTint="@color/usc_red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nextButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/passTwo"
-        android:inputType="textPassword"
-        android:layout_width="313dp"
-        android:layout_height="65dp"
+        android:layout_width="328dp"
+        android:layout_height="76dp"
         android:layout_marginTop="296dp"
         android:hint="Confirm Password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountTitle"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.164"
         app:met_floatingLabel="highlight"
-        app:met_primaryColor="@color/usc_red"/>
+        app:met_helperTextColor="@color/error_red"
+        app:met_primaryColor="@color/usc_red" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/passOne"
-        android:inputType="textPassword"
-        android:layout_width="319dp"
-        android:layout_height="62dp"
+        android:layout_width="323dp"
+        android:layout_height="72dp"
         android:layout_marginTop="212dp"
         android:hint="Password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/passTwo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountTitle"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.524"
         app:met_floatingLabel="highlight"
-        app:met_primaryColor="@color/usc_red"/>
+        app:met_helperTextColor="@color/error_red"
+        app:met_primaryColor="@color/usc_red" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/emailField"
-        android:layout_width="321dp"
-        android:layout_height="61dp"
+        android:layout_width="323dp"
+        android:layout_height="73dp"
         android:layout_marginTop="128dp"
         android:hint="Email"
         app:layout_constraintBottom_toTopOf="@+id/passOne"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountTitle"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.6"
+        app:met_errorColor="@color/error_red"
         app:met_floatingLabel="highlight"
-        app:met_primaryColor="@color/usc_red"/>
+        app:met_primaryColor="@color/usc_red" />
 
     <TextView
         android:id="@+id/createAccountTitle"
         android:layout_width="248dp"
         android:layout_height="38dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
         android:text="Create Account"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:fontFamily="@font/open_sans_bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/fullName"
-        android:layout_width="320dp"
-        android:layout_height="58dp"
+        android:layout_width="322dp"
+        android:layout_height="73dp"
         android:layout_marginTop="40dp"
         android:hint="Name"
         app:layout_constraintBottom_toTopOf="@+id/emailField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountTitle"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.69"
+        app:met_helperTextColor="@color/error_red"
         app:met_floatingLabel="highlight"
-        app:met_primaryColor="@color/usc_red"/>
+        app:met_primaryColor="@color/usc_red" />
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Next"
+        app:backgroundTint="@color/usc_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passTwo" />
+
+    <TextView
+        android:id="@+id/createAccountError"
+        android:layout_width="221dp"
+        android:layout_height="35dp"
+        android:gravity="center"
+        app:fontFamily="@font/open_sans"
+        app:layout_constraintBottom_toTopOf="@+id/fullName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountTitle"
+        app:layout_constraintVertical_bias="0.242" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
