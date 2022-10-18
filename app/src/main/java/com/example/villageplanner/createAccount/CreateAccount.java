@@ -85,8 +85,6 @@ public class CreateAccount extends AppCompatActivity {
                     canProceed = false;
                 }
                 // Move to next screen
-                // TODO: Delete when done
-                canProceed = true;
                 if(canProceed) {
                     Intent next = new Intent(CreateAccount.this, ImagePicker.class);
                     startActivity(next);
