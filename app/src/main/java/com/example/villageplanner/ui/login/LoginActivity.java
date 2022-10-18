@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
-        // Google Login
+        // TODO: Google Login
         googleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,12 +171,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // TODO: Google Login
     private void googleSignIn() {
         Intent intent = gsc.getSignInIntent();
         startActivityForResult(intent, 100);
 
     }
 
+    // TODO: Google Login
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

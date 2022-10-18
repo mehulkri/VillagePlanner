@@ -15,4 +15,8 @@ public class AccountCreationValidator {
         RegexpValidator validate = new RegexpValidator("Invalid!", "^(.+)@(\\S+)$");
         return validate.isValid(email, false);
     }
+
+    public static boolean validatePasswordStrength(String password, RegexpValidator validate) {
+        return validate.isValid(password, false);
+    }
 }

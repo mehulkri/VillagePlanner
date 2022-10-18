@@ -2,6 +2,7 @@ package com.example.villageplanner.createAccount;
 
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validateEmail;
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validatePassword;
+import static com.example.villageplanner.createAccount.AccountCreationValidator.validatePasswordStrength;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.villageplanner.ImagePicker;
 import com.example.villageplanner.R;
 import com.example.villageplanner.ui.login.LoginActivity;
 import com.google.android.gms.tasks.Task;
@@ -52,26 +54,42 @@ public class CreateAccount extends AppCompatActivity {
                 String passwordOne = getInfo(password);
                 String passwordTwo = getInfo(confirmPassword);
                 String error;
+                boolean canProceed = true;
                 if(fullName.isEmpty()) {
                     error = "Need to input full name." ;
                     setErrorText(error, name);
+                    canProceed = false;
                 }
                 if(passwordOne.isEmpty()) {
                     error = "Need to input a password.";
                     setErrorText(error, password);
+                    canProceed = false;
                 }
                 if(passwordTwo.isEmpty()) {
                     error = "Need to confirm the password";
                     setErrorText(error, confirmPassword);
+                    canProceed = false;
                 }
-                if(tryValidate(fullName, emailAddr, passwordOne, passwordTwo)) {
+                if(tryValidate(fullName, emailAddr, passwordOne, passwordTwo) && canProceed) {
                     // Try to add the user to Firebase database
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     Task<AuthResult> result = mAuth.createUserWithEmailAndPassword(emailAddr, passwordOne);
                     if(!result.isSuccessful()) {
-                        error = "Account with email " + emailAddr + " already exists. Please login in or try a different email address";
-                        errorMessage.setText(error);
+                        if(result.getException() != null) {
+                            error = result.getException().toString();
+                            errorMessage.setText(error);
+                        }
+                        canProceed = false;
                     }
+                } else {
+                    canProceed = false;
+                }
+                // Move to next screen
+                // TODO: Delete when done
+                canProceed = true;
+                if(canProceed) {
+                    Intent next = new Intent(CreateAccount.this, ImagePicker.class);
+                    startActivity(next);
                 }
             }
         });
@@ -82,6 +100,10 @@ public class CreateAccount extends AppCompatActivity {
             public void onClick(View v) {
                 Intent login = new Intent(CreateAccount.this, LoginActivity.class);
                 startActivity(login);
+
+                // pass the constant to compare it
+                // with the returned requestCode
+            //    startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
             }
         });
     }
@@ -90,14 +112,32 @@ public class CreateAccount extends AppCompatActivity {
         // Get information
         boolean isValid = true;
         email.validateWith(new RegexpValidator("Invalid!", "^(.+)@(\\S+)$"));
+        String passwordRegex = "^(?=.*[0-9])"
+                + "(?=.*[a-z])(?=.*[A-Z])"
+                + "(?=.*[@#$%^&+=!])"
+                + "(?=\\S+$).{8,20}$";
+        RegexpValidator passwordValidator = new RegexpValidator("Weak password", passwordRegex);
+        password.validateWith(passwordValidator);
+        confirmPassword.validateWith(passwordValidator);
+        // Validate passwords match
         if(!validatePassword(passwordOne, passwordTwo)) {
             setErrorText("Not the same password", password);
             setErrorText("Not the same password", confirmPassword);
             isValid = false;
         }
+        // Validate email is valid
         if(!validateEmail(emailAddr)) {
             isValid = false;
         }
+        // Validate password is strong
+        if(!validatePasswordStrength(passwordOne, passwordValidator)) {
+            isValid = false;
+            String passwordRules = "Password must have: One numeric character, one lowercase character, " +
+                    "one uppercase character, one special character, and should be between 8 to 40 characters in length";
+            errorMessage.setText(passwordRules);
+
+        }
+
         return isValid;
     }
 

@@ -6,14 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".ImagePicker">
 
+    <!--Button to open the image selector-->
+
+    <!--ImageView to preview the selected image-->
+
+    <Button
+        android:id="@+id/submitImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/usc_red"
+
+        android:text="SUBMIT"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IVPreviewImage"
+        app:layout_constraintVertical_bias="0.06" />
+
     <TextView
         android:id="@+id/selectImageText"
-        android:layout_width="144dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="304dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="44dp"
         android:text="Select a profile picture."
+        android:textSize="28dp"
         app:fontFamily="@font/lato_bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/imagePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/usc_red"
+        android:text="SELECT IMAGE"
+
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/IVPreviewImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectImageText"
+        app:layout_constraintVertical_bias="0.08" />
+
+    <ImageView
+        android:id="@+id/IVPreviewImage"
+        android:layout_width="367dp"
+        android:layout_height="305dp"
+        android:layout_marginBottom="176dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectImageText"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
