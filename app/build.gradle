@@ -50,5 +50,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    // Required -- JUnit 4 framework
+    testImplementation 'junit:junit:4.12'
+    // Optional -- Mockito framework
+    testImplementation "org.mockito:mockito-core:3.+"
+
 
 }

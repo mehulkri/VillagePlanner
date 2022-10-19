@@ -49,42 +49,27 @@ public class CreateAccount extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fullName = getInfo(name);
-                String emailAddr = getInfo(email);
-                String passwordOne = getInfo(password);
-                String passwordTwo = getInfo(confirmPassword);
                 String error;
                 boolean canProceed = true;
-                if(fullName.isEmpty()) {
-                    error = "Need to input full name." ;
-                    setErrorText(error, name);
-                    canProceed = false;
-                }
-                if(passwordOne.isEmpty()) {
-                    error = "Need to input a password.";
-                    setErrorText(error, password);
-                    canProceed = false;
-                }
-                if(passwordTwo.isEmpty()) {
-                    error = "Need to confirm the password";
-                    setErrorText(error, confirmPassword);
-                    canProceed = false;
-                }
-                if(tryValidate(fullName, emailAddr, passwordOne, passwordTwo) && canProceed) {
+                if(determineIfUserTypedInValidFields()) {
                     // Try to add the user to Firebase database
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    Task<AuthResult> result = mAuth.createUserWithEmailAndPassword(emailAddr, passwordOne);
+                    Task<AuthResult> result = mAuth.createUserWithEmailAndPassword(getInfo(email), getInfo(password));
                     if(!result.isSuccessful()) {
                         if(result.getException() != null) {
                             error = result.getException().toString();
-                            errorMessage.setText(error);
+                        } else {
+                            error = "Firebase Connection Issue";
                         }
+                        errorMessage.setText(error);
                         canProceed = false;
                     }
                 } else {
                     canProceed = false;
                 }
                 // Move to next screen
+                // TODO: Delete when done
+                // canProceed = true;
                 if(canProceed) {
                     Intent next = new Intent(CreateAccount.this, ImagePicker.class);
                     startActivity(next);
@@ -146,6 +131,27 @@ public class CreateAccount extends AppCompatActivity {
     public void setErrorText(String errorMessage, MaterialEditText pass) {
         pass.setHelperText(errorMessage);
         pass.setHelperTextAlwaysShown(true);
+    }
+
+    private boolean checkFieldEmpty(String errorMessage, MaterialEditText input) {
+        if(getInfo(input).isEmpty()) {
+            setErrorText(errorMessage, input);
+             return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean determineIfUserTypedInValidFields() {
+        String fullName = getInfo(name);
+        String emailAddr = getInfo(email);
+        String passwordOne = getInfo(password);
+        String passwordTwo = getInfo(confirmPassword);
+        boolean canProceed = checkFieldEmpty("Need to input full name.", name) &&
+                checkFieldEmpty("Need to input a password.", password) &&
+                checkFieldEmpty("Need to confirm the password", confirmPassword) &&
+                tryValidate(fullName, emailAddr, passwordOne, passwordTwo) ;
+        return canProceed;
     }
 
 
