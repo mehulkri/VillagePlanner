@@ -3,6 +3,7 @@ package com.example.villageplanner;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,6 +12,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class ImagePicker extends AppCompatActivity {
 
@@ -18,6 +26,7 @@ public class ImagePicker extends AppCompatActivity {
     private Button submit;
     private ImageView IVPreviewImage;
     private Uri image;
+    private StorageReference storageRef;
 
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -57,6 +66,20 @@ public class ImagePicker extends AppCompatActivity {
             public void onClick(View v) {
                 if(image != null) {
                     // Upload image to Firebase
+                    storageRef = FirebaseStorage.getInstance().getReference("UserProfilePictures/");
+                    storageRef.putFile(image)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Toast.makeText(ImagePicker.this, "Image Upload was successful", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(ImagePicker.this, "Image Upload failed", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                 }
             }
         });

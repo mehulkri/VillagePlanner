@@ -69,7 +69,7 @@ public class CreateAccount extends AppCompatActivity {
                 }
                 // Move to next screen
                 // TODO: Delete when done
-                // canProceed = true;
+                canProceed = true;
                 if(canProceed) {
                     Intent next = new Intent(CreateAccount.this, ImagePicker.class);
                     startActivity(next);
