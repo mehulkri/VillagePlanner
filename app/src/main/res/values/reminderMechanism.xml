@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="reminder_mechanism">
+        <item>Email</item>
+        <item>Notification</item>
+    </string-array>
+</resources>

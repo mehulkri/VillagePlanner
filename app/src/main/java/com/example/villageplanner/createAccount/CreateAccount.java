@@ -1,10 +1,12 @@
 package com.example.villageplanner.createAccount;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validateEmail;
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validatePassword;
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validatePasswordStrength;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +16,10 @@ import android.widget.TextView;
 
 import com.example.villageplanner.ImagePicker;
 import com.example.villageplanner.R;
+import com.example.villageplanner.ReminderMainPage.ReminderPage;
 import com.example.villageplanner.ui.login.LoginActivity;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -31,6 +35,7 @@ public class CreateAccount extends AppCompatActivity {
     Button submit;
     Button backToLogin;
     TextView errorMessage;
+    CoordinatorLayout bottom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +49,7 @@ public class CreateAccount extends AppCompatActivity {
         submit = (Button) findViewById(R.id.nextButton);
         backToLogin = (Button) findViewById(R.id.backToLogin);
         errorMessage = (TextView) findViewById(R.id.createAccountError);
+        bottom = (CoordinatorLayout) findViewById(R.id.snackbar_layout);
 
         // Next button
         submit.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +68,7 @@ public class CreateAccount extends AppCompatActivity {
                             error = "Firebase Connection Issue";
                         }
                         errorMessage.setText(error);
+                        setError(error);
                         canProceed = false;
                     }
                 } else {
@@ -71,7 +78,8 @@ public class CreateAccount extends AppCompatActivity {
                 // TODO: Delete when done
                 canProceed = true;
                 if(canProceed) {
-                    Intent next = new Intent(CreateAccount.this, ImagePicker.class);
+                   // Intent next = new Intent(CreateAccount.this, ImagePicker.class);
+                    Intent next = new Intent(CreateAccount.this, ReminderPage.class);
                     startActivity(next);
                 }
             }
@@ -118,7 +126,7 @@ public class CreateAccount extends AppCompatActivity {
             String passwordRules = "Password must have: One numeric character, one lowercase character, " +
                     "one uppercase character, one special character, and should be between 8 to 40 characters in length";
             errorMessage.setText(passwordRules);
-
+            setError(passwordRules);
         }
 
         return isValid;
@@ -152,6 +160,11 @@ public class CreateAccount extends AppCompatActivity {
                 checkFieldEmpty("Need to confirm the password", confirmPassword) &&
                 tryValidate(fullName, emailAddr, passwordOne, passwordTwo) ;
         return canProceed;
+    }
+
+    private void setError(String errorMessage) {
+        Snackbar snack = Snackbar.make(bottom, errorMessage, LENGTH_LONG);
+        snack.show();
     }
 
 

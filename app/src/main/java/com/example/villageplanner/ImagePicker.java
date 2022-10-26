@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -66,7 +67,9 @@ public class ImagePicker extends AppCompatActivity {
             public void onClick(View v) {
                 if(image != null) {
                     // Upload image to Firebase
-                    storageRef = FirebaseStorage.getInstance().getReference("UserProfilePictures/");
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    String email = auth.getCurrentUser().getEmail();
+                    storageRef = FirebaseStorage.getInstance().getReference().child("/UserProfilePictures").child(email + "_pic");
                     storageRef.putFile(image)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
