@@ -1,29 +1,33 @@
-package com.example.villageplanner.ReminderMainPage;
+package com.example.villageplanner.ReminderLogic;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class Reminder {
+public class Reminder implements Serializable {
 
     private String location;
     private String title;
     private String description;
-    private LocalDateTime remindTime;
+    private LocalDateTime targetTime;
     private int userId;
+    private String reminderId;
+    private LocalDateTime remindTime;
 
     Reminder(String loc, String header, LocalDateTime time) {
         setLocation(loc);
         setTitle(header);
-        setRemindTime(time);
+        setTargetTime(time);
         setDescription(null);
     }
 
-    Reminder(String loc, String header, LocalDateTime time, String des) {
+    Reminder(String loc, String header, LocalDateTime time, String des, String rId) {
         setLocation(loc);
         setTitle(header);
-        setRemindTime(time);
+        setTargetTime(time);
         setDescription(des);
+        reminderId = rId;
+        remindTime = time.minusMinutes(10);
     }
 
     public String getLocation() {
@@ -50,13 +54,31 @@ public class Reminder {
         this.description = description;
     }
 
-    public String getRemindTime() {
+    public String getTargetTime() {
+        DateTimeFormatter formats = DateTimeFormatter.ofPattern("H:m a");
+        String output = targetTime.format(formats);
+        return output;
+    }
+
+    public String getLeaveTime() {
         DateTimeFormatter formats = DateTimeFormatter.ofPattern("H:m a");
         String output = remindTime.format(formats);
         return output;
     }
 
-    public void setRemindTime(LocalDateTime remindTime) {
-        this.remindTime = remindTime;
+    public LocalDateTime getRemindTime() {
+        return remindTime;
+    }
+
+    public void setTargetTime(LocalDateTime targetTime) {
+        this.targetTime = targetTime;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getReminderId() {
+        return reminderId;
     }
 }

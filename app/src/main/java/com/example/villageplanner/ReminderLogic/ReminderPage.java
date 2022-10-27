@@ -1,4 +1,4 @@
-package com.example.villageplanner.ReminderMainPage;
+package com.example.villageplanner.ReminderLogic;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,9 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 
 
-import com.example.villageplanner.CreateReminder;
 import com.example.villageplanner.R;
-import com.example.villageplanner.createAccount.CreateAccount;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -95,6 +93,7 @@ public class ReminderPage extends AppCompatActivity {
         for(int i=0; i < 10; i++) {
             this.reminders.add(new Reminder("Cava", "Eat at Cava", LocalDateTime.now()));
         }
+
     }
 
 

@@ -14,9 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.villageplanner.ImagePicker;
 import com.example.villageplanner.R;
-import com.example.villageplanner.ReminderMainPage.ReminderPage;
+import com.example.villageplanner.ReminderLogic.ReminderPage;
 import com.example.villageplanner.ui.login.LoginActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;

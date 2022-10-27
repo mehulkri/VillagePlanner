@@ -1,8 +1,10 @@
-package com.example.villageplanner;
+package com.example.villageplanner.ReminderLogic;
+
+import static com.example.villageplanner.ReminderLogic.ReminderFieldVerification.validateDate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -15,11 +17,18 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-import com.example.villageplanner.ReminderMainPage.ReminderPage;
+import com.example.villageplanner.R;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.UUID;
 
 public class CreateReminder extends AppCompatActivity {
     Spinner locations;
@@ -30,6 +39,7 @@ public class CreateReminder extends AppCompatActivity {
     EditText title;
     int hour, minute, year, month, day;
     Button submit;
+    CoordinatorLayout snackLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +75,11 @@ public class CreateReminder extends AppCompatActivity {
         });
 
         arrivalDate = (TextView) findViewById(R.id.dateArrive);
+        month = LocalDate.now().getMonthValue();
+        day = LocalDate.now().getDayOfMonth();
+        year = LocalDate.now().getYear();
+        arrivalDate.setText(String.format(Locale.getDefault(),
+                "%02d/%02d/%04d", month, day, year));
         arrivalDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,13 +92,18 @@ public class CreateReminder extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createNewReminder();
+                if(verifyData()) {
+                    createNewReminder();
+                }
             }
         });
 
         // Edit Test
         description = (EditText) findViewById(R.id.remindTitleText);
         title = (EditText) findViewById(R.id.descriptionText);
+
+        // Setup CoordinateLayout
+        snackLayout = (CoordinatorLayout) findViewById(R.id.snacking);
     }
 
     public void popTimePicker(View view) {
@@ -107,7 +127,7 @@ public class CreateReminder extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int sYear, int sMonth, int sDay) {
                 year = sYear;
-                month = sMonth;
+                month = sMonth+1;
                 day = sDay;
                 arrivalDate.setText(String.format(Locale.getDefault(), "%02d/%02d/%04d", month, day, year));
             }
@@ -121,8 +141,50 @@ public class CreateReminder extends AppCompatActivity {
 
     private void createNewReminder() {
         // Store this reminder in a database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference =  database.getReference("Reminders");
+        Reminder notify = createReminder();
+        DatabaseReference userRef = reference.child(Integer.toString(notify.getUserId())).child(notify.getReminderId());
+        Task<Void> result = userRef.setValue(notify);
+        if(!result.isSuccessful()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Firebase Error: Could not add Reminder", Toast.LENGTH_LONG);
+            toast.show();
+        } else {
+//            Intent in = new Intent(CreateReminder.this, ReminderViewer.class);
+//            in.putExtra("Reminder", in);
+        }
+        Intent in = new Intent(CreateReminder.this, ReminderViewer.class);
+        in.putExtra("Reminder", in);
 
+    }
+
+    private boolean verifyData() {
+        String dateError = validateDate(year, month, day, hour, minute);
+        if(!dateError.isEmpty()) {
+            printError(dateError);
+            return false;
+        }
+        String titular = title.getText().toString();
+        if(title.getText().toString().isEmpty()) {
+            printError("Need to fill in a title for your reminder");
+            return false;
+        }
+        return true;
+    }
+
+    private Reminder createReminder() {
         String location = locations.getSelectedItem().toString();
+        LocalDateTime time = LocalDateTime.of(year, month, day, hour, minute);
+        String des = description.getText().toString();
+        String titular = title.getText().toString();
+        int userId = 4;
+        UUID reminderId = UUID.randomUUID();
+        Reminder remind = new Reminder(location, titular, time, des, reminderId.toString());
+        return remind;
+    }
 
+    private void printError(String text) {
+        Snackbar snack = Snackbar.make(snackLayout, text, Snackbar.LENGTH_LONG);
+        snack.show();
     }
 }

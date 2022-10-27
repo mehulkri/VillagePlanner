@@ -4,99 +4,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateReminder">
+    tools:context=".ReminderLogic.CreateReminder">
 
     <EditText
         android:id="@+id/remindTitleText"
         android:layout_width="365dp"
         android:layout_height="45dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/reminderDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateArrive" />
+        app:layout_constraintTop_toBottomOf="@+id/titleRemind" />
 
     <TextView
         android:id="@+id/titleRemind"
         android:layout_width="132dp"
         android:layout_height="28dp"
-        android:layout_marginTop="16dp"
         android:text="Title"
         android:textSize="20dp"
         app:fontFamily="@font/lato_bold"
         app:layout_constraintBottom_toTopOf="@+id/remindTitleText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arrivalDateTitle"
-        app:layout_constraintVertical_bias="0.594" />
+        app:layout_constraintTop_toBottomOf="@+id/arrivalDateTitle" />
 
     <TextView
         android:id="@+id/dateArrive"
         android:layout_width="213dp"
         android:layout_height="37dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:text=" Choose Date"
+        app:layout_constraintBottom_toTopOf="@+id/remindTitleText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/arrivalDateTitle"
-        tools:layout_editor_absoluteY="171dp" />
+        app:layout_constraintTop_toBottomOf="@+id/arrive" />
 
     <TextView
         android:id="@+id/arrivalDateTitle"
         android:layout_width="132dp"
         android:layout_height="28dp"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="20dp"
         android:text="Arrival Date"
         android:textSize="20dp"
         app:fontFamily="@font/lato_bold"
-        app:layout_constraintBottom_toTopOf="@+id/reminderDescription"
+        app:layout_constraintBottom_toTopOf="@+id/titleRemind"
         app:layout_constraintEnd_toStartOf="@+id/arrive"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arrivalTimeTitle" />
 
     <Spinner
         android:id="@+id/chooseRemindMechanism"
         android:layout_width="212dp"
         android:layout_height="41dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="276dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/submitReminder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.919"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/remindMech"
         app:layout_constraintTop_toBottomOf="@+id/descriptionText" />
 
     <TextView
         android:id="@+id/remindMech"
         android:layout_width="135dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="272dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="240dp"
         android:text="Remind Mechanism"
         android:textSize="20dp"
         app:fontFamily="@font/lato_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chooseRemindMechanism"
-        app:layout_constraintHorizontal_bias="0.604"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionText"
+        app:layout_constraintVertical_bias="0.558" />
 
     <TextView
         android:id="@+id/reminderDescription"
         android:layout_width="132dp"
         android:layout_height="28dp"
         android:layout_marginStart="29dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="250dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="4dp"
         android:text="Description"
         android:textSize="20dp"
         app:fontFamily="@font/lato_bold"
         app:layout_constraintBottom_toTopOf="@+id/descriptionText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/remindTitleText" />
 
@@ -104,37 +116,43 @@
         android:id="@+id/arrivalTimeTitle"
         android:layout_width="132dp"
         android:layout_height="28dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="188dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginEnd="17dp"
         android:text="Arrival Time"
         android:textSize="20dp"
         app:fontFamily="@font/lato_bold"
-        app:layout_constraintBottom_toTopOf="@+id/reminderDescription"
+        app:layout_constraintBottom_toTopOf="@+id/arrivalDateTitle"
         app:layout_constraintEnd_toStartOf="@+id/arrive"
-        app:layout_constraintHorizontal_bias="0.115"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LocationTitle" />
 
     <TextView
         android:id="@+id/reminderTitle"
-        android:layout_width="98dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="161dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="45dp"
         android:text="New Reminder"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/LocationTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/LocationTitle"
         android:layout_width="132dp"
         android:layout_height="28dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="15dp"
         android:text="Location: "
         android:textSize="20dp"
         app:fontFamily="@font/lato_bold"
+        app:layout_constraintBottom_toTopOf="@+id/arrivalTimeTitle"
         app:layout_constraintEnd_toStartOf="@+id/loc_spin"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reminderTitle" />
 
@@ -142,42 +160,68 @@
         android:id="@+id/loc_spin"
         android:layout_width="212dp"
         android:layout_height="35dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/arrive"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/arrivalTimeTitle"
         app:layout_constraintTop_toBottomOf="@+id/reminderTitle" />
 
     <TextView
         android:id="@+id/arrive"
         android:layout_width="213dp"
         android:layout_height="37dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="6dp"
         android:text=" Choose Time"
+        app:layout_constraintBottom_toTopOf="@+id/dateArrive"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/arrivalTimeTitle"
         app:layout_constraintTop_toBottomOf="@+id/loc_spin" />
 
     <EditText
         android:id="@+id/descriptionText"
-        android:layout_width="357dp"
-        android:layout_height="58dp"
+        android:layout_width="363dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/chooseRemindMechanism"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.452"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="336dp" />
+        app:layout_constraintTop_toBottomOf="@+id/reminderDescription" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/snacking"
+        android:layout_width="417dp"
+        android:layout_height="78dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.833"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.995">
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <Button
         android:id="@+id/submitReminder"
         android:layout_width="203dp"
         android:layout_height="54dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="39dp"
         android:text="Create Reminder"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/snacking"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseRemindMechanism"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/chooseRemindMechanism" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.villageplanner.ReminderMainPage;
+package com.example.villageplanner.ReminderLogic;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +61,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RemindViewHolder vh = (RemindViewHolder) holder;
         vh.titleView.setText(item.getTitle());
         vh.location.setText(item.getLocation());
-        vh.time.setText(item.getRemindTime());
+        vh.time.setText(item.getTargetTime());
         vh.data = item;
     }
 }
