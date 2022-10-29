@@ -10,19 +10,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.villageplanner.databinding.ActivityHomepageBinding;
 
 public class HomepageActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ActivityHomepageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityHomepageBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_home_page);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -44,8 +40,9 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(34.025777343183165, -118.2849796291695);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng USCVillage = new LatLng(34.025777343183165, -118.2849796291695);
+        mMap.addMarker(new MarkerOptions().position(USCVillage).title("USCVillage"));
+        float zoomLevel = (float) 18.0;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(USCVillage,zoomLevel));
     }
 }
