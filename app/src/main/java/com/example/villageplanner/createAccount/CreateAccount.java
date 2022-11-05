@@ -8,12 +8,16 @@ import static com.example.villageplanner.createAccount.AccountCreationValidator.
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.villageplanner.ImagePicker;
 import com.example.villageplanner.R;
 import com.example.villageplanner.ReminderLogic.ReminderPage;
 import com.example.villageplanner.ui.login.LoginActivity;
@@ -77,8 +81,8 @@ public class CreateAccount extends AppCompatActivity {
                 // TODO: Delete when done
                 canProceed = true;
                 if(canProceed) {
-                   // Intent next = new Intent(CreateAccount.this, ImagePicker.class);
-                    Intent next = new Intent(CreateAccount.this, ReminderPage.class);
+                    Intent next = new Intent(CreateAccount.this, ImagePicker.class);
+                   // Intent next = new Intent(CreateAccount.this, ReminderPage.class);
                     startActivity(next);
                 }
             }
@@ -165,6 +169,7 @@ public class CreateAccount extends AppCompatActivity {
         Snackbar snack = Snackbar.make(bottom, errorMessage, LENGTH_LONG);
         snack.show();
     }
+
 
 
 }

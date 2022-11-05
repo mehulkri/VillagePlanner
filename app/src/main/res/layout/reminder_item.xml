@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             app:tint="@color/usc_red"
-            android:src="@drawable/delete"/>
+            android:src="@drawable/ic_baseline_thumb_up_24" />
     </RelativeLayout>
 
 

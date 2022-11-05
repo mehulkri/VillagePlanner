@@ -3,6 +3,7 @@ package com.example.villageplanner.ReminderLogic;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Reminder implements Serializable {
 
@@ -10,24 +11,21 @@ public class Reminder implements Serializable {
     private String title;
     private String description;
     private LocalDateTime targetTime;
-    private int userId;
+    private String userId;
     private String reminderId;
     private LocalDateTime remindTime;
 
-    Reminder(String loc, String header, LocalDateTime time) {
-        setLocation(loc);
-        setTitle(header);
-        setTargetTime(time);
-        setDescription(null);
-    }
 
-    Reminder(String loc, String header, LocalDateTime time, String des, String rId) {
+    Reminder(String loc, String header, LocalDateTime time, String des, String rId, String uId) {
         setLocation(loc);
         setTitle(header);
         setTargetTime(time);
         setDescription(des);
         reminderId = rId;
-        remindTime = time.minusMinutes(10);
+        targetTime = time;
+       // remindTime = time.minusMinutes(10);
+        remindTime = targetTime;
+        userId = uId;
     }
 
     public String getLocation() {
@@ -54,17 +52,19 @@ public class Reminder implements Serializable {
         this.description = description;
     }
 
-    public String getTargetTime() {
-        DateTimeFormatter formats = DateTimeFormatter.ofPattern("H:m a");
+    public String getTargetTimeString() {
+        DateTimeFormatter formats = DateTimeFormatter.ofPattern("HH:mm a");
         String output = targetTime.format(formats);
         return output;
     }
 
     public String getLeaveTime() {
-        DateTimeFormatter formats = DateTimeFormatter.ofPattern("H:m a");
+        DateTimeFormatter formats = DateTimeFormatter.ofPattern("HH:mm a");
         String output = remindTime.format(formats);
         return output;
     }
+
+    public LocalDateTime getTargetTime() { return targetTime; }
 
     public LocalDateTime getRemindTime() {
         return remindTime;
@@ -74,7 +74,7 @@ public class Reminder implements Serializable {
         this.targetTime = targetTime;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 

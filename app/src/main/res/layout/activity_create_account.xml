@@ -70,15 +70,16 @@
 
     <TextView
         android:id="@+id/createAccountTitle"
-        android:layout_width="248dp"
-        android:layout_height="38dp"
+        android:layout_width="249dp"
+        android:layout_height="6dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="7dp"
         android:gravity="center"
-        android:text="Create Account"
+        android:text=" "
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:fontFamily="@font/open_sans_bold"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountError"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,8 +113,8 @@
 
     <TextView
         android:id="@+id/createAccountError"
-        android:layout_width="371dp"
-        android:layout_height="61dp"
+        android:layout_width="370dp"
+        android:layout_height="62dp"
         android:gravity="center"
         app:fontFamily="@font/open_sans"
         app:layout_constraintBottom_toTopOf="@+id/fullName"
