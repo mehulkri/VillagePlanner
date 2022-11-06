@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="store_list">
-        <item>Cava</item>
+        <item>Amazon Locker</item>
+        <item>CAVA</item>
+        <item>Chinese Street Food</item>
+        <item>City Tacos</item>
+        <item>Credit Union</item>
+        <item>FedEx</item>
+        <item>Fruit + Candy</item>
+        <item>Greenleaf</item>
+        <item>Health Hut</item>
+        <item>Insomnia</item>
+        <item>Kaitlyn</item>
+        <item>KOBUNGA</item>
+        <item>Mac Repair Clinic</item>
+        <item>Ramen Kenjo</item>
+        <item>Solé Bicycles</item>
+        <item>Starbucks</item>
+        <item>Sunlife Organics</item>
+        <item>SUPAMU</item>
+        <item>Target</item>
+        <item>Trader Joe\'s</item>
         <item>Village Gym</item>
-        <item>Dining Halls</item>
+
     </string-array>
 </resources>
