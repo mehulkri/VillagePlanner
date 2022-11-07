@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/route"
-                android:onClick="route"/>
+                android:onClick="buttonClick"/>
         </LinearLayout>
 
         <androidx.appcompat.widget.Toolbar
