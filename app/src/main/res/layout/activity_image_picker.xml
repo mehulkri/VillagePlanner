@@ -23,50 +23,36 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/IVPreviewImage"
-        app:layout_constraintVertical_bias="0.06" />
-
-    <TextView
-        android:id="@+id/selectImageText"
-        android:layout_width="304dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="44dp"
-        android:text="Select a profile picture."
-        android:textSize="28dp"
-        app:fontFamily="@font/lato_bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.301" />
 
     <Button
         android:id="@+id/imagePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="74dp"
+
+        android:layout_marginBottom="30dp"
         android:backgroundTint="@color/usc_red"
         android:text="SELECT IMAGE"
-
         android:textColor="@android:color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/IVPreviewImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectImageText"
-        app:layout_constraintVertical_bias="0.08" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/IVPreviewImage"
         android:layout_width="367dp"
         android:layout_height="305dp"
-        android:layout_marginBottom="176dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="224dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectImageText"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/imagePicker" />
 </androidx.constraintlayout.widget.ConstraintLayout>

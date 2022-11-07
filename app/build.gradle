@@ -7,7 +7,6 @@ plugins {
 android {
     compileSdk 33
 
-
     defaultConfig {
         applicationId "com.example.villageplanner"
         minSdk 24

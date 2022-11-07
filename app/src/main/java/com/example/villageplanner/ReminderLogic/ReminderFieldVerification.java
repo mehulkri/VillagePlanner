@@ -39,4 +39,12 @@ public class ReminderFieldVerification {
         }
         return error;
     }
+
+    public static String validateHoursOfOperation(int hour, String location) {
+        String error = "";
+        if(hour < 8 || hour > 22) {
+            error += location + " is not open at this hour. Please choose a different time.";
+        }
+        return error;
+    }
 }
