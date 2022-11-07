@@ -81,8 +81,8 @@ public class CreateAccount extends AppCompatActivity {
                 // TODO: Delete when done
                 canProceed = true;
                 if(canProceed) {
-                    Intent next = new Intent(CreateAccount.this, ImagePicker.class);
-                   // Intent next = new Intent(CreateAccount.this, ReminderPage.class);
+                  //  Intent next = new Intent(CreateAccount.this, ImagePicker.class);
+                    Intent next = new Intent(CreateAccount.this, ReminderPage.class);
                     startActivity(next);
                 }
             }

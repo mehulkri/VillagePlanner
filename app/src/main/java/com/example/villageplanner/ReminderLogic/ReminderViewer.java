@@ -1,6 +1,7 @@
 package com.example.villageplanner.ReminderLogic;
 
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
+import static com.example.villageplanner.ReminderLogic.StorePictureHelper.getPicture;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -74,28 +75,22 @@ public class ReminderViewer extends AppCompatActivity {
         });
 
         // Set the text view texts
-        title.setText("Title: " + remind.getTitle());
-        target.setText("Target Time: " +  remind.getTargetTimeString());
-        leave.setText("Leave Time: " + remind.getLeaveTime());
-        String dates = String.format(Locale.getDefault(), "%02d/%02d/%04d", time.getMonthValue(),
-                time.getDayOfMonth(), time.getYear());
-        date.setText("Date: " + dates);
-        description.setText("Description: " + remind.getDescription());
-        place.setText("Place: " + remind.getLocation());
+        if(remind != null) {
+            title.setText("Title: " + remind.getTitle());
+            target.setText("Target Time: " +  remind.getTargetTimeString());
+            leave.setText("Leave Time: " + remind.getLeaveTime());
+            String dates = String.format(Locale.getDefault(), "%02d/%02d/%04d", time.getMonthValue(),
+                    time.getDayOfMonth(), time.getYear());
+            date.setText("Date: " + dates);
+            description.setText("Description: " + remind.getDescription());
+            place.setText("Place: " + remind.getLocation());
 
-        // Set image
-        pic.setImageResource(getPicture(remind.getLocation()));
+            // Set image
+            pic.setImageResource(getPicture(remind.getLocation()));
+        } else {
 
-
-    }
-
-
-    private int getPicture(String store) {
-        switch (store) {
-            case "Village Gym":
-                return R.drawable.villagegym;
-            default:
-                return R.drawable.cava;
         }
+
     }
+
 }

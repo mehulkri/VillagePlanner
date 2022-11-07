@@ -18,29 +18,44 @@ import java.time.LocalDateTime;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        boolean alternateIntent = false;
         Intent i = new Intent(context, ReminderViewer.class);
+        Intent a = new Intent(context, ReminderPage.class);
+        String[] keys = {"ReminderTitle", "ReminderDescription", "TargetTime", "RemindTime", "LeaveTime", "Date", "Place"};
+        for(String key : keys) {
+            String result = intent.getStringExtra(key);
+            if(result == null) {
+                alternateIntent = true;
+            }
+            i.putExtra(key, result);
+        }
         String title = intent.getStringExtra("ReminderTitle");
         String description = intent.getStringExtra("ReminderDescription");
-        Reminder notify = (Reminder) intent.getSerializableExtra("Reminder");
+        String location = intent.getStringExtra("Place");
+        String notifTitle;
+        if(location == null) {
+            notifTitle = "Time to leave for the USC Village";
+        } else {
+            notifTitle = "Time to leave for " + location;
+        }
         if(title == null) {
             title = "";
         }
-        if(description == null) {
-            description = "";
-        }
-        if(notify == null) {
-            notify = new Reminder("Cava", "Eat at Cava", LocalDateTime.now(), "This is the description", "efdsfdfds", "0");
-        }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        i.putExtra("Reminder", notify);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
+        PendingIntent pendingIntent;
+        if(alternateIntent) {
+            pendingIntent = PendingIntent.getActivity(context, 0, a, 0);
+        } else {
+            pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
+        }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "village")
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle(title)
-                .setContentText(description)
+                .setContentTitle(notifTitle)
+                .setContentText(title)
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(123, builder.build());

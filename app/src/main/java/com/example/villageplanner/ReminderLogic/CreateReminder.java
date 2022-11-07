@@ -1,7 +1,9 @@
 package com.example.villageplanner.ReminderLogic;
 
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.addReminderToDatabase;
+import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getUserId;
 import static com.example.villageplanner.ReminderLogic.ReminderFieldVerification.validateDate;
+import static com.example.villageplanner.ReminderLogic.ReminderFieldVerification.validateHoursOfOperation;
 import static com.example.villageplanner.ReminderLogic.TimeHelper.getReminderMilli;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,6 +90,9 @@ public class CreateReminder extends AppCompatActivity {
         arrivalDate = (TextView) findViewById(R.id.dateArrive);
         if(remind == null) {
             setDateText(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth() );
+            year = LocalDate.now().getYear();
+            month =  LocalDate.now().getMonthValue();
+            day = LocalDateTime.now().getDayOfMonth();
         } else {
             LocalDateTime target = remind.getTargetTime();
             setDateText(target.getYear(), target.getMonthValue(), target.getDayOfMonth());
@@ -136,6 +141,8 @@ public class CreateReminder extends AppCompatActivity {
         picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hour = picker.getHour();
+                minute = picker.getMinute();
                 setTimeText(picker.getHour(), picker.getMinute());
             }
         });
@@ -182,6 +189,12 @@ public class CreateReminder extends AppCompatActivity {
             printError(dateError);
             return false;
         }
+        String loc = locations.getSelectedItem().toString();
+        String hoursError = validateHoursOfOperation(hour, loc);
+        if(!hoursError.isEmpty()) {
+            printError(hoursError);
+            return false;
+        }
         String titular = title.getText().toString();
         if(title.getText().toString().isEmpty()) {
             printError("Need to fill in a title for your reminder");
@@ -196,7 +209,10 @@ public class CreateReminder extends AppCompatActivity {
         // I think I switched these up
         String des = title.getText().toString();
         String titular = description.getText().toString();
-        String userId = "4";
+        String userId = getUserId();
+        if(userId.isEmpty()) {
+            userId = "4";
+        }
         UUID reminderId = UUID.randomUUID();
         Reminder remind = new Reminder(location, titular, time, des, reminderId.toString(), userId);
         return remind;
@@ -224,10 +240,16 @@ public class CreateReminder extends AppCompatActivity {
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("ReminderTitle", notify.getTitle());
         intent.putExtra("ReminderDescription", notify.getDescription());
-        intent.putExtra("Reminder", notify);
+        intent.putExtra("LeaveTime", notify.getLeaveTime());
+        intent.putExtra("TargetTime", notify.getTargetTime());
+        LocalDateTime time = notify.getRemindTime();
+        String dates = String.format(Locale.getDefault(), "%02d/%02d/%04d", time.getMonthValue(),
+                time.getDayOfMonth(), time.getYear());
+        intent.putExtra("Date", dates);
+        intent.putExtra("Place", notify.getLocation());
         pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, getReminderMilli(notify),
-                2000,pendingIntent);
+                AlarmManager.INTERVAL_DAY*365,pendingIntent);
         Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
     }
 

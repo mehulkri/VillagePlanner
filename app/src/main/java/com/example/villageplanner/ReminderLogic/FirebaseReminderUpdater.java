@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,19 +46,17 @@ public class FirebaseReminderUpdater {
         ArrayList<Reminder> reminders = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference =  database.getReference("Reminders").child(userId);
-        Task<DataSnapshot> result = reference.get();
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot child : dataSnapshot.getChildren()) {
-                    reminders.add(dataSnapshotToReminder(child));
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()) {
+                    if(task.getResult().exists()) {
+                        DataSnapshot dataSnapshot = task.getResult();
+                        for(DataSnapshot child : dataSnapshot.getChildren()) {
+                            reminders.add(dataSnapshotToReminder(child));
+                        }
+                    }
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("SecondFragment", "Failed to read value.", error.toException());
-                throw error.toException();
             }
         });
         return reminders;

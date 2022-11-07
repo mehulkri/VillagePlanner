@@ -3,6 +3,28 @@
     <string-array name="store_list">
         <item>Cava</item>
         <item>Village Gym</item>
-        <item>Dining Halls</item>
+        <item>Village Dining Hall</item>
+        <item>Fedex</item>
+        <item>KOBUNGA</item>
+        <item>Mac Repair Clinic</item>
+        <item>Ramen Kenjo</item>
+        <item>Sunlife Organics</item>
+        <item>Greenleaf</item>
+        <item>Insomnia Cookies</item>
+        <item>Dulce</item>
+        <item>Dining Hall</item>
+        <item>Amazon Locker</item>
+        <item>USC Credit Union</item>
+        <item>Trader Joes</item>
+        <item>Target</item>
+        <item>Sammiche Shoppe</item>
+        <item>Honeybird</item>
+        <item>Stout Burgers and Beers</item>
+        <item>Chinese Street Food</item>
+        <item>Fruit + Candy</item>
+        <item>Rock and Reilly\'s</item>
+        <item>City Tacos</item>
+        <item>Solé Bicycles</item>
+        <item>Kaityln</item>
     </string-array>
 </resources>
