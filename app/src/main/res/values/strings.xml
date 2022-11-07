@@ -12,4 +12,6 @@
     <string name="title_activity_home_page">HomePage</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_homepage">HomepageActivity</string>
+    <string name="route">Route</string>
+
 </resources>
