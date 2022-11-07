@@ -14,15 +14,15 @@
         android:background="#0F9D58"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="  USC Village"
+        app:title="USC Village"
         app:titleTextColor="#ffff" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
-        android:layout_below="@+id/toolbar"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:layout_below="@+id/toolbar"
         tools:context=".HomeLogic.HomepageActivity" />
 
     <LinearLayout
@@ -31,35 +31,55 @@
         android:layout_below="@+id/map"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0F9D58"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="Reminders"
+            app:titleTextColor="#ffff" />
+
+        <TextView
+            android:id="@+id/Reminders"
+            android:layout_width="match_parent"
+            android:layout_height="177dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="77dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/routeto"
+                android:textSize="30sp" />
 
             <Spinner
                 android:id="@+id/store"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="37dp"
-                android:entries="@array/store_list"/>
+                android:layout_gravity="center"
+                android:entries="@array/store_list"
+                android:minHeight="48dp" />
 
-            <Button
-                android:id="@+id/display_route"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/route"
-                android:onClick="route"/>
         </LinearLayout>
 
-        <androidx.appcompat.widget.Toolbar
-        android:id="@+id/reminder"
-        android:layout_width="20dp"
-        android:layout_height="wrap_content"
-        android:background="#0F9D58"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="  USC Village"
-        app:titleTextColor="#ffff" />
+        <Button
+            android:id="@+id/display_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="buttonClick"
+            android:text="@string/route" />
+
+
+
 
     </LinearLayout>
 
