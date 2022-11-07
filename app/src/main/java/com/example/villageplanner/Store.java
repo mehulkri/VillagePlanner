@@ -43,7 +43,7 @@ public class Store {
         return longitude;
     }
 
-    double queue_time(double time){ // returned in minutes
+    public double queue_time(double time){ // returned in minutes
         if(time > closingTime || openingTime > time){
             return -1; // store closed
         }

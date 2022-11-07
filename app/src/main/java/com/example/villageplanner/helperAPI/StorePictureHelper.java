@@ -1,5 +1,4 @@
-package com.example.villageplanner.ReminderLogic;
-
+package com.example.villageplanner.helperAPI;
 import com.example.villageplanner.R;
 
 public class StorePictureHelper {
@@ -21,6 +20,23 @@ public class StorePictureHelper {
                 return R.drawable.ramen;
             case "Sunlife Organics":
                 return R.drawable.sunlife;
+            case "Credit Union":
+                return R.drawable.credit_union;
+            case "Insomnia Cookies":
+                 return R.drawable.insomnia;
+            case "Dulce":
+                return R.drawable.dulce;
+            case "Amazon Locker":
+                return R.drawable.amazon_two;
+            case "Trader Joe\'s":
+                return R.drawable.trader_joes;
+            case "Target":
+                return R.drawable.target;
+            case "Solé Bicycles":
+                return R.drawable.sole;
+            case "Honeybird":
+                return R.drawable.honeybird;
+
             default:
                 return R.drawable.defaultvillage;
         }

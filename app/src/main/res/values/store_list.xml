@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="store_list">
-        <item>Amazon Locker</item>
-        <item>CAVA</item>
-        <item>Chinese Street Food</item>
-        <item>City Tacos</item>
-        <item>Credit Union</item>
-        <item>FedEx</item>
-        <item>Fruit + Candy</item>
-        <item>Greenleaf</item>
-        <item>Health Hut</item>
-        <item>Insomnia</item>
-        <item>Kaitlyn</item>
-        <item>KOBUNGA</item>
-        <item>Mac Repair Clinic</item>
-        <item>Ramen Kenjo</item>
-        <item>Solé Bicycles</item>
-        <item>Starbucks</item>
-        <item>Sunlife Organics</item>
-        <item>SUPAMU</item>
-        <item>Target</item>
-        <item>Trader Joe\'s</item>
-        <item>Village Gym</item>
         <item>Village Dining Hall</item>
         <item>Fedex</item>
         <item>KOBUNGA</item>
@@ -34,7 +13,7 @@
         <item>Dining Hall</item>
         <item>Amazon Locker</item>
         <item>USC Credit Union</item>
-        <item>Trader Joes</item>
+        <item>Trader Joe\'s</item>
         <item>Target</item>
         <item>Sammiche Shoppe</item>
         <item>Honeybird</item>
@@ -45,6 +24,5 @@
         <item>City Tacos</item>
         <item>Solé Bicycles</item>
         <item>Kaityln</item>
-
     </string-array>
 </resources>

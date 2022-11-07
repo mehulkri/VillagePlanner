@@ -1,7 +1,7 @@
 package com.example.villageplanner.ReminderLogic;
 
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
-import static com.example.villageplanner.ReminderLogic.StorePictureHelper.getPicture;
+import static com.example.villageplanner.helperAPI.StorePictureHelper.getPicture;
 
 import androidx.appcompat.app.AppCompatActivity;
 

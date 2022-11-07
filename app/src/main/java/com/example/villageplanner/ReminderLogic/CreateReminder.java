@@ -4,7 +4,7 @@ import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.a
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getUserId;
 import static com.example.villageplanner.ReminderLogic.ReminderFieldVerification.validateDate;
 import static com.example.villageplanner.ReminderLogic.ReminderFieldVerification.validateHoursOfOperation;
-import static com.example.villageplanner.ReminderLogic.TimeHelper.getReminderMilli;
+import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -38,7 +38,6 @@ import com.google.android.material.timepicker.TimeFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.UUID;
 

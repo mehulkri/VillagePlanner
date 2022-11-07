@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,19 +47,43 @@ public class FirebaseReminderUpdater {
         ArrayList<Reminder> reminders = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference =  database.getReference("Reminders").child(userId);
-        reference.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//        reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (!task.isSuccessful()) {
+//                    Log.e("firebase", "Error getting data", task.getException());
+//                }
+//
+//                if(task.isSuccessful()) {
+//                    if(task.getResult().exists()) {
+//                        DataSnapshot dataSnapshot = task.getResult();
+//                        for(DataSnapshot child : dataSnapshot.getChildren()) {
+//                            reminders.add(dataSnapshotToReminder(child));
+//                        }
+//                    }
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                e.printStackTrace();
+//            }
+//        }) ;
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()) {
-                    if(task.getResult().exists()) {
-                        DataSnapshot dataSnapshot = task.getResult();
-                        for(DataSnapshot child : dataSnapshot.getChildren()) {
-                            reminders.add(dataSnapshotToReminder(child));
-                        }
-                    }
-                }
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                System.out.println("I hate this!!!");
             }
         });
+
         return reminders;
 
     }

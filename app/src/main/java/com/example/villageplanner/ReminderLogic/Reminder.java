@@ -1,5 +1,7 @@
 package com.example.villageplanner.ReminderLogic;
 
+import com.example.villageplanner.Store;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -80,5 +82,10 @@ public class Reminder implements Serializable {
 
     public String getReminderId() {
         return reminderId;
+    }
+
+    private void calculateReminderTime() {
+        Store location = new Store(this.location);
+
     }
 }

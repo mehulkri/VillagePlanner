@@ -3,7 +3,7 @@ package com.example.villageplanner.ReminderLogic;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.addReminderToDatabase;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getReminders;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
-import static com.example.villageplanner.ReminderLogic.TimeHelper.getReminderMilli;
+import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +28,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import co.dift.ui.SwipeToAction;

@@ -1,4 +1,6 @@
-package com.example.villageplanner.ReminderLogic;
+package com.example.villageplanner.helperAPI;
+
+import com.example.villageplanner.ReminderLogic.Reminder;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
