@@ -10,12 +10,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -23,26 +20,18 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.villageplanner.BuildConfig;
-import com.example.villageplanner.MainActivity;
 import com.example.villageplanner.R;
 import com.example.villageplanner.Store;
 import com.example.villageplanner.directionHelpers.FetchURL;
 import com.example.villageplanner.directionHelpers.TaskLoadedCallback;
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -54,9 +43,6 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-
-import java.util.Properties;
-
 
 public class HomepageActivity extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback {
 
@@ -162,6 +148,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     }
 
     public void buttonClick(View view) {
+        getDeviceLocation();
         Spinner storeSpinner = (Spinner) findViewById(R.id.store);
         String storeName = String.valueOf(storeSpinner.getSelectedItem());
         Store store = new Store(storeName);
@@ -176,7 +163,6 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     }
 
     public void route(MarkerOptions myMarker, MarkerOptions storeMarker) {
-        //TODO: Route this shizzzzz
         String url = getUrl(myMarker.getPosition(), storeMarker.getPosition(), "walking");
         System.out.println(url);
         new FetchURL(HomepageActivity.this).execute(url, "walking");
