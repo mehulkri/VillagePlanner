@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.villageplanner.BuildConfig;
 import com.example.villageplanner.MainActivity;
 import com.example.villageplanner.R;
 import com.example.villageplanner.Store;
@@ -70,6 +71,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     private static final String KEY_LOCATION = "location";
     private CameraPosition cameraPosition;
     Polyline currPolyline;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,7 +152,6 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
                             mMap.moveCamera(CameraUpdateFactory
                                     .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                            lastKnownLocation = task.getResult();
                         }
                     }
                 });
@@ -172,8 +173,6 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
 
         mMap.addMarker(storeMarker);
         mMap.addMarker(myMarker);
-
-
     }
 
     public void route(MarkerOptions myMarker, MarkerOptions storeMarker) {
@@ -181,7 +180,6 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         String url = getUrl(myMarker.getPosition(), storeMarker.getPosition(), "walking");
         System.out.println(url);
         new FetchURL(HomepageActivity.this).execute(url, "walking");
-        System.out.println("ROUTING to ");
     }
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
@@ -190,7 +188,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         String mode = "mode=" + directionMode;
         String parameters= str_origin + "&" + str_dest + "&" + mode;
         String output = "json";
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.mapsApiKey);
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + BuildConfig.MAPS_API_KEY;
         return url;
     }
 
@@ -198,6 +196,5 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     public void onTaskDone(Object... values) {
         if(currPolyline != null) currPolyline.remove();
         currPolyline = mMap.addPolyline((PolylineOptions) values[0]);
-        System.out.println("PRINTED");
     }
 }
