@@ -61,7 +61,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RemindViewHolder vh = (RemindViewHolder) holder;
         vh.titleView.setText(item.getTitle());
         vh.location.setText(item.getLocation());
-        vh.time.setText(item.getTargetTime());
+        vh.time.setText(item.getTargetTimeString());
         vh.data = item;
     }
 }

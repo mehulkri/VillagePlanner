@@ -1,13 +1,25 @@
 package com.example.villageplanner.ReminderLogic;
 
+import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.addReminderToDatabase;
+import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getReminders;
+import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
+import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.example.villageplanner.R;
@@ -27,6 +39,8 @@ public class ReminderPage extends AppCompatActivity {
     ReminderAdapter adapter;
     SwipeToAction swipeToAction;
     FloatingActionButton plus;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     List<Reminder> reminders = new ArrayList<>();
 
@@ -35,6 +49,7 @@ public class ReminderPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_page);
+        createNotificationChannel();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclers);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -63,13 +78,16 @@ public class ReminderPage extends AppCompatActivity {
 
             @Override
             public boolean swipeRight(Reminder itemData) {
-                displaySnackbar(itemData.getTitle() + " loved", null, null);
+                displaySnackbar(itemData.getTitle() + " liked", null, null);
                 return true;
             }
 
             @Override
             public void onClick(Reminder itemData) {
                 displaySnackbar(itemData.getTitle() + " clicked", null, null);
+                Intent in = new Intent(ReminderPage.this, ReminderViewer.class);
+                in.putExtra("Reminder", itemData);
+                startActivity(in);
             }
 
             @Override
@@ -89,9 +107,21 @@ public class ReminderPage extends AppCompatActivity {
     }
 
     private void populate() {
-
+        try {
+            ArrayList<Reminder> firebaseReminders = getReminders("4");
+            if(firebaseReminders.isEmpty()) {
+                displaySnackbar("Firebase could not get reminders", null, null);
+            } else {
+                firebaseReminders.forEach(r -> {
+                    this.reminders.add(r);
+                    setAlarm(r);
+                });
+            }
+        } catch (Exception e) {
+            displaySnackbar("Firebase could not get reminders", null, null);
+        }
         for(int i=0; i < 10; i++) {
-            this.reminders.add(new Reminder("Cava", "Eat at Cava", LocalDateTime.now()));
+            this.reminders.add(new Reminder("Cava", "Eat at Cava", LocalDateTime.now(), "This is the description", "efdsfdfds", "0"));
         }
 
     }
@@ -101,23 +131,63 @@ public class ReminderPage extends AppCompatActivity {
         int pos = reminders.indexOf(reminder);
         reminders.remove(reminder);
         adapter.notifyItemRemoved(pos);
+        // Remove from Database
+        try {
+            removeReminderFromDatabase(reminder);
+            cancelAlarm();
+        } catch (Exception e) {
+            displaySnackbar(e.toString(), null, null);
+        }
         return pos;
     }
 
     private void addBook(int pos, Reminder book) {
         reminders.add(pos, book);
         adapter.notifyItemInserted(pos);
+        // Add from Database
+        boolean addition = addReminderToDatabase(book);
+        if(addition == false) {
+            displaySnackbar("Database Error: Could not add reminder", null, null);
+        }
+    }
+
+    private void cancelAlarm() {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+        if (alarmManager == null){
+            alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        }
+        alarmManager.cancel(pendingIntent);
     }
 
     private void displaySnackbar(String text, String actionName, View.OnClickListener action) {
         Snackbar snack = Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                 .setAction(actionName, action);
-
-//        View v = snack.getView();
-//        v.setBackgroundColor(getResources().getColor(R.color.secondary));
-//        ((TextView) v.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
-//        ((TextView) v.findViewById(android.support.design.R.id.snackbar_action)).setTextColor(Color.BLACK);
-
         snack.show();
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "villageReminderChannel";
+            String description = "Channel For Reminders in the Village Planner";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("village",name,importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void setAlarm(Reminder notify) {
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("ReminderTitle", notify.getTitle());
+        intent.putExtra("ReminderDescription", notify.getDescription());
+        intent.putExtra("Reminder", notify);
+        pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, getReminderMilli(notify),
+                2000,pendingIntent);
+        Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
     }
 }

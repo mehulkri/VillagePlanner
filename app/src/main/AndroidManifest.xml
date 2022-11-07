@@ -4,8 +4,10 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -18,35 +20,35 @@
         android:theme="@style/Theme.VillagePlanner"
         tools:targetApi="33">
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
-
         <activity
             android:name=".HomeLogic.HomepageActivity"
-            android:exported="true"
-            android:label="@string/title_activity_homepage">
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ReminderLogic.ReminderViewer"
             android:exported="false" />
         <activity
             android:name=".ReminderLogic.ReminderPage"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Reminders"/>
         <activity
             android:name=".ReminderLogic.CreateReminder"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Create New Reminder"/>
         <activity
             android:name=".ImagePicker"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Select a profile picture"/>
         <activity
             android:name=".createAccount.CreateAccount"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Create Account"/>
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
@@ -61,12 +63,14 @@
             android:name=".MainActivity"
             android:exported="true" />
 
+        <receiver android:name=".ReminderLogic.AlarmReceiver" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
     </application>
 
 </manifest>
