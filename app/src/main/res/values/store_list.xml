@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="store_list">
-        <item>Village Dining Hall</item>
-        <item>Fedex</item>
+        <item>Amazon Locker</item>
+        <item>Chinese Street Food</item>
+        <item>City Tacos</item>
+        <item>Dining Hall</item>
+        <item>Dulce</item>
+        <item>FedEx</item>
+        <item>Fruit + Candy</item>
+        <item>Greenleaf</item>
+        <item>Honeybird</item>
+        <item>Insomnia Cookies</item>
         <item>KOBUNGA</item>
+        <item>Kaitlyn</item>
         <item>Mac Repair Clinic</item>
         <item>Ramen Kenjo</item>
-        <item>Sunlife Organics</item>
-        <item>Greenleaf</item>
-        <item>Insomnia Cookies</item>
-        <item>Dulce</item>
-        <item>Dining Hall</item>
-        <item>Amazon Locker</item>
-        <item>USC Credit Union</item>
-        <item>Trader Joe\'s</item>
-        <item>Target</item>
-        <item>Sammiche Shoppe</item>
-        <item>Honeybird</item>
-        <item>Stout Burgers and Beers</item>
-        <item>Chinese Street Food</item>
-        <item>Fruit + Candy</item>
         <item>Rock and Reilly\'s</item>
-        <item>City Tacos</item>
+        <item>Sammiche Shoppe</item>
         <item>Solé Bicycles</item>
-        <item>Kaityln</item>
+        <item>Stout Burgers and Beers</item>
+        <item>Sunlife Organics</item>
+        <item>Target</item>
+        <item>Trader Joe\'s</item>
+        <item>USC Credit Union</item>
+        <item>Village Dining Hall</item>
     </string-array>
 </resources>
