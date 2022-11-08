@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.villageplanner.HomeLogic.HomepageActivity;
+import com.example.villageplanner.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,6 +84,8 @@ public class ImagePicker extends AppCompatActivity {
                                     Toast.makeText(ImagePicker.this, "Image Upload failed", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                    Intent in = new Intent(ImagePicker.this, LoginActivity.class);
+                    startActivity(in);
 
                 }
             }

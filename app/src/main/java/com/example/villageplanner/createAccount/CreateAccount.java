@@ -88,12 +88,10 @@ public class CreateAccount extends AppCompatActivity {
                 }
                 // Move to next screen
                 // TODO: Delete when done
-               // canProceed = true;
                 if(canProceed) {
                     // Write to JSON
                     writeUserToFile(getInfo(email), getInfo(password));
-                  //  Intent next = new Intent(CreateAccount.this, ImagePicker.class);
-                    Intent next = new Intent(CreateAccount.this, ReminderPage.class);
+                    Intent next = new Intent(CreateAccount.this, ImagePicker.class);
                     startActivity(next);
                 }
             }
