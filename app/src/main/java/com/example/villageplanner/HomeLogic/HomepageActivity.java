@@ -66,6 +66,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
@@ -191,6 +192,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     public void onTaskDone(Object... values) {
         if(currPolyline != null) currPolyline.remove();
         currPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+        System.out.println(values.getClass());
     }
 
     public void goToReminders(View view) {

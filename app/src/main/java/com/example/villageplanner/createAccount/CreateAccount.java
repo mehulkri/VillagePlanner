@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.villageplanner.HomeLogic.HomepageActivity;
 import com.example.villageplanner.ImagePicker;
 import com.example.villageplanner.R;
 import com.example.villageplanner.ReminderLogic.ReminderPage;
@@ -82,8 +83,8 @@ public class CreateAccount extends AppCompatActivity {
                 canProceed = true;
                 if(canProceed) {
                   //  Intent next = new Intent(CreateAccount.this, ImagePicker.class);
-                    Intent next = new Intent(CreateAccount.this, ReminderPage.class);
-                    startActivity(next);
+                    Intent i = new Intent(CreateAccount.this, HomepageActivity.class);
+                    startActivity(i);
                 }
             }
         });
