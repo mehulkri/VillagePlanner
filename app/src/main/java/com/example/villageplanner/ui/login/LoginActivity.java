@@ -190,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     task.getResult(ApiException.class);
                    // Credential credential = GoogleAuthProvider.getCredential();
-                    System.out.println("Sucess");
+                    System.out.println("Success");
                 } catch (ApiException e) {
                     System.out.println("Fail");
                 }

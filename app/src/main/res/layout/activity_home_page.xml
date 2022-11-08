@@ -21,7 +21,7 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_below="@+id/toolbar"
         tools:context=".HomeLogic.HomepageActivity" />
 
@@ -30,21 +30,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/map"
         android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/reminder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#0F9D58"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:title="Reminders"
-            app:titleTextColor="#ffff" />
-
-        <TextView
-            android:id="@+id/Reminders"
-            android:layout_width="match_parent"
-            android:layout_height="177dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,15 +55,34 @@
 
         </LinearLayout>
 
+
+            <Button
+                android:id="@+id/display_route"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="buttonClick"
+                android:text="@string/route" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:textSize="30sp"/>
+
         <Button
-            android:id="@+id/display_route"
-            android:layout_width="wrap_content"
+            android:id="@+id/reminder"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="buttonClick"
-            android:text="@string/route" />
-
-
+            android:background="#0F9D58"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="Reminders"
+            android:text="@string/reminders"
+            android:textSize="20sp"
+            android:gravity="center"
+            app:titleTextColor="#ffff"
+            android:onClick="goToReminders"/>
 
 
     </LinearLayout>

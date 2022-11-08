@@ -16,12 +16,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 
+import com.example.villageplanner.HomeLogic.HomepageActivity;
 import com.example.villageplanner.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,6 +41,7 @@ public class ReminderPage extends AppCompatActivity {
     ReminderAdapter adapter;
     SwipeToAction swipeToAction;
     FloatingActionButton plus;
+    private Location lastKnownLocation;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
 
@@ -50,6 +53,11 @@ public class ReminderPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_page);
         createNotificationChannel();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            lastKnownLocation = extras.getParcelable("location");
+        }
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclers);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -101,6 +109,7 @@ public class ReminderPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent next = new Intent(ReminderPage.this, CreateReminder.class);
+                next.putExtra("location", lastKnownLocation);
                 startActivity(next);
             }
         });

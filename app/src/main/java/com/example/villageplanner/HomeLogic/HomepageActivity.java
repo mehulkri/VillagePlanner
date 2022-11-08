@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.villageplanner.BuildConfig;
 import com.example.villageplanner.R;
+import com.example.villageplanner.ReminderLogic.ReminderPage;
 import com.example.villageplanner.Store;
 import com.example.villageplanner.directionHelpers.FetchURL;
 import com.example.villageplanner.directionHelpers.TaskLoadedCallback;
@@ -182,5 +183,11 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     public void onTaskDone(Object... values) {
         if(currPolyline != null) currPolyline.remove();
         currPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+    }
+
+    public void goToReminders(View view) {
+        Intent i = new Intent(HomepageActivity.this, ReminderPage.class);
+        i.putExtra("location", lastKnownLocation);
+        startActivity(i);
     }
 }

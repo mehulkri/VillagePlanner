@@ -1,5 +1,7 @@
 package com.example.villageplanner.ReminderLogic;
 
+import android.location.Location;
+
 import com.example.villageplanner.Store;
 
 import java.io.Serializable;
@@ -16,6 +18,7 @@ public class Reminder implements Serializable {
     private String userId;
     private String reminderId;
     private LocalDateTime remindTime;
+    private Location lastKnownLocation;
 
 
     Reminder(String loc, String header, LocalDateTime time, String des, String rId, String uId) {
@@ -28,6 +31,11 @@ public class Reminder implements Serializable {
        // remindTime = time.minusMinutes(10);
         remindTime = targetTime;
         userId = uId;
+    }
+    public Location getLastKnownLocation() {return lastKnownLocation;}
+
+    public void setLastKnownLocation(Location lastKnownLocation) {
+        this.lastKnownLocation = lastKnownLocation;
     }
 
     public String getLocation() {
