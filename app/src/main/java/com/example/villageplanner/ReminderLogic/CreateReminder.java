@@ -61,6 +61,7 @@ public class CreateReminder extends AppCompatActivity {
         setContentView(R.layout.activity_create_reminder);
         createNotificationChannel();
 
+        // Get reminder Intent
         Reminder remind = (Reminder) getIntent().getSerializableExtra("Reminder");
         Bundle extras = getIntent().getExtras();
         // Get reminder Intent
@@ -221,6 +222,7 @@ public class CreateReminder extends AppCompatActivity {
         Reminder remind = new Reminder(location, titular, time, des, reminderId.toString(), userId);
         remind.setLastKnownLocation(lastKnownLocation);
 
+        remind.writeToJSONFile(getApplicationContext());
         return remind;
     }
 

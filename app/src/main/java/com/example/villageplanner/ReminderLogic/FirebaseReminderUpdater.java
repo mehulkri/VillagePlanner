@@ -47,34 +47,14 @@ public class FirebaseReminderUpdater {
         ArrayList<Reminder> reminders = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference =  database.getReference("Reminders").child(userId);
-//        reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (!task.isSuccessful()) {
-//                    Log.e("firebase", "Error getting data", task.getException());
-//                }
-//
-//                if(task.isSuccessful()) {
-//                    if(task.getResult().exists()) {
-//                        DataSnapshot dataSnapshot = task.getResult();
-//                        for(DataSnapshot child : dataSnapshot.getChildren()) {
-//                            reminders.add(dataSnapshotToReminder(child));
-//                        }
-//                    }
-//                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                e.printStackTrace();
-//            }
-//        }) ;
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    reminders.add(dataSnapshotToReminder(child));
+                }
 
             }
             @Override
@@ -98,7 +78,7 @@ public class FirebaseReminderUpdater {
         }
     }
 
-    private static Reminder dataSnapshotToReminder(DataSnapshot data) {
+    public static Reminder dataSnapshotToReminder(DataSnapshot data) {
         HashMap<String, Object> result = (HashMap<String, Object>) data.getValue();
         String title = (String) result.get("title");
         String descrip = (String) result.get("description");
