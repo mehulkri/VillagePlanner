@@ -26,8 +26,8 @@ public class Store {
             case "cava":
                 openingTime=10.75;
                 closingTime=22;
-                latitude=34.03105090118111;
-                longitude=-118.28413292847169;
+                latitude=34.025289107299386;
+                longitude=-118.28452640000003;
                 break;
             case "chinese street food":
                 openingTime=11;
