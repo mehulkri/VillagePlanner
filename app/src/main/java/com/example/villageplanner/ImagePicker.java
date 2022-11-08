@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.villageplanner.createAccount.CreateAccount;
+import com.example.villageplanner.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,6 +87,8 @@ public class ImagePicker extends AppCompatActivity {
                             });
 
                 }
+                Intent create = new Intent(ImagePicker.this , LoginActivity.class);
+                startActivity(create);
             }
         });
     }

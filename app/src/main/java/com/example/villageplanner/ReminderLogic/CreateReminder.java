@@ -1,5 +1,6 @@
 package com.example.villageplanner.ReminderLogic;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.addReminderToDatabase;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getUserId;
 import static com.example.villageplanner.ReminderLogic.ReminderFieldVerification.validateDate;
@@ -255,7 +256,7 @@ public class CreateReminder extends AppCompatActivity {
                 time.getDayOfMonth(), time.getYear());
         intent.putExtra("Date", dates);
         intent.putExtra("Place", notify.getLocation());
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+        pendingIntent = PendingIntent.getBroadcast(this,0,intent,FLAG_IMMUTABLE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, getReminderMilli(notify),
                 AlarmManager.INTERVAL_DAY*365,pendingIntent);
         Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();

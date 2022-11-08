@@ -201,15 +201,15 @@ public class Store {
         }
     }
 
-    double queueTime(double time){ // returned in minutes
-        if (isClosed(time)) {
-            return -1;
-        }
-        else{
+    public long queueTime(){ // returned in minutes
+//        if (isClosed(time)) {
+//            return -1;
+//        }
+//        else{
             int upper = 20;
             int lower = 10;
-            return (int) (Math.random() * (upper - lower)) + lower;
-        }
+            return (long) (Math.random() * (upper - lower)) + lower;
+//        }
     }
 
     double walkTime(){

@@ -22,7 +22,7 @@
 
         <activity
             android:name=".HomeLogic.HomepageActivity"
-            android:exported="true">
+            android:exported="false">
         </activity>
 
         <activity

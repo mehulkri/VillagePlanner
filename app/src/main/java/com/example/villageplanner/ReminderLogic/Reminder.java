@@ -36,7 +36,7 @@ public class Reminder implements Serializable {
         setDescription(des);
         reminderId = rId;
         targetTime = time;
-       // remindTime = time.minusMinutes(10);
+        remindTime = calculateReminderTime();
         remindTime = targetTime;
         userId = uId;
     }
@@ -100,9 +100,10 @@ public class Reminder implements Serializable {
         return reminderId;
     }
 
-    private void calculateReminderTime() {
+    private LocalDateTime calculateReminderTime() {
         Store location = new Store(this.location);
-
+        long queueTime = location.queueTime();
+        return targetTime.minusMinutes(queueTime+10);
     }
 
     public void writeToJSONFile(Context context) {

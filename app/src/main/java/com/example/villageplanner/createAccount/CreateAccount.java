@@ -94,7 +94,7 @@ public class CreateAccount extends AppCompatActivity {
                     // Write to JSON
                     writeUserToFile(getInfo(email), getInfo(password));
                   //  Intent next = new Intent(CreateAccount.this, ImagePicker.class);
-                    Intent i = new Intent(CreateAccount.this, HomepageActivity.class);
+                    Intent i = new Intent(CreateAccount.this, ImagePicker.class);
                     startActivity(i);
                 }
             }
