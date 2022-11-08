@@ -1,7 +1,5 @@
 package com.example.villageplanner;
 
-import java.math.BigDecimal;
-import java.util.Objects;
 
 public class Store {
     private final String name;
@@ -173,8 +171,15 @@ public class Store {
             return -1;
         }
         else{
-            // ToDo: make this not constant
-            return 10;
+            int upper = 20;
+            int lower = 10;
+            return (int) (Math.random() * (upper - lower)) + lower;
         }
+    }
+
+    double walkTime(){
+        int upper = 30;
+        int lower = 20;
+        return (int) (Math.random() * (upper - lower)) + lower;
     }
 }
