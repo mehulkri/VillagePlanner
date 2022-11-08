@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.villageplanner.HomeLogic.HomepageActivity;
 import com.example.villageplanner.createAccount.CreateAccount;
 import com.example.villageplanner.R;
 import com.example.villageplanner.databinding.ActivityLoginPageBinding;
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
-        final SignInButton googleLogin = binding.googleLogin;
+        final Button loginFailure = binding.failButton;
         final Button createAccount = binding.createAccount;
         final ProgressBar loadingProgressBar = binding.loading;
 
@@ -113,6 +114,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        loginFailure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(LoginActivity.this, HomepageActivity.class);
+                startActivity(in);
+            }
+        });
+
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -150,13 +159,14 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-            }
-        });
-        // TODO: Google Login
-        googleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                googleSignIn();
+                Intent in;
+                if(loginViewModel.getLoginSuccess()) {
+                    in = new Intent(LoginActivity.this, HomepageActivity.class);
+                    startActivity(in);
+                } else {
+                    in = new Intent(LoginActivity.this, LoginActivity.class);
+                    startActivity(in);
+                }
             }
         });
 
@@ -171,12 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: Google Login
-    private void googleSignIn() {
-        Intent intent = gsc.getSignInIntent();
-        startActivityForResult(intent, 100);
 
-    }
 
     // TODO: Google Login
     @Override

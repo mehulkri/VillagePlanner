@@ -5,6 +5,7 @@ import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.d
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getReminders;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
 import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
+import static com.example.villageplanner.helperAPI.TimeHelper.isExpired;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -121,10 +122,23 @@ public class ReminderPage extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
-                    for(DataSnapshot child : dataSnapshot.getChildren()) {
-                        Reminder remind  = dataSnapshotToReminder(child);
-                        reminders.add(remind);
-                        setAlarm(remind);
+                    if(dataSnapshot == null) {
+                        displaySnackbar("Firebase could not get reminders", null, null);
+                    } else {
+                        for(DataSnapshot child : dataSnapshot.getChildren()) {
+                            Reminder remind  = dataSnapshotToReminder(child);
+                            if(isExpired(remind)) {
+                                try {
+                                    removeReminderFromDatabase(remind);
+                                } catch (Exception e) {
+                                    displaySnackbar("Could not remove reminder", null, null);
+                                }
+                            } else {
+                                reminders.add(remind);
+                                adapter.notifyItemInserted(reminders.size() -1);
+                                setAlarm(remind);
+                            }
+                        }
                     }
                 }
                 @Override
@@ -133,12 +147,7 @@ public class ReminderPage extends AppCompatActivity {
                     System.out.println("I hate this!!!");
                 }
             });
-            if(reminders.size() == 0) {
-                displaySnackbar("Firebase could not get reminders", null, null);
-                for(int i=0; i < 10; i++) {
-                    this.reminders.add(new Reminder("Cava", "Eat at Cava", LocalDateTime.now(), "This is the description", "efdsfdfds", "0"));
-                }
-            }
+
 
     }
 
@@ -203,7 +212,7 @@ public class ReminderPage extends AppCompatActivity {
         pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
 
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, getReminderMilli(notify),
-                2000,pendingIntent);
+                AlarmManager.INTERVAL_DAY*365,pendingIntent);
         Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
     }
 }

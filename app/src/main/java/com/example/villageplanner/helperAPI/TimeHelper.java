@@ -25,4 +25,15 @@ public class TimeHelper {
             return calendar.getTimeInMillis();
         }
     }
+
+    // Returns true reminder has expired
+    public static boolean isExpired(Reminder notify) {
+        if(notify != null) {
+            LocalDateTime remindT = notify.getRemindTime();
+            LocalDateTime nowIsh = LocalDateTime.now().plusMinutes(10);
+            return nowIsh.isAfter(remindT);
+        } else {
+            return false;
+        }
+    }
 }

@@ -28,6 +28,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class CreateAccount extends AppCompatActivity {
 
@@ -67,20 +75,23 @@ public class CreateAccount extends AppCompatActivity {
                     if(!result.isSuccessful()) {
                         if(result.getException() != null) {
                             error = result.getException().toString();
+                            errorMessage.setText(error);
+                            setError(error);
+                            canProceed = false;
                         } else {
-                            error = "Firebase Connection Issue";
+                            canProceed = true;
                         }
-                        errorMessage.setText(error);
-                        setError(error);
-                        canProceed = false;
+
                     }
                 } else {
                     canProceed = false;
                 }
                 // Move to next screen
                 // TODO: Delete when done
-                canProceed = true;
+               // canProceed = true;
                 if(canProceed) {
+                    // Write to JSON
+                    writeUserToFile(getInfo(email), getInfo(password));
                   //  Intent next = new Intent(CreateAccount.this, ImagePicker.class);
                     Intent next = new Intent(CreateAccount.this, ReminderPage.class);
                     startActivity(next);
@@ -168,6 +179,28 @@ public class CreateAccount extends AppCompatActivity {
     private void setError(String errorMessage) {
         Snackbar snack = Snackbar.make(bottom, errorMessage, LENGTH_LONG);
         snack.show();
+    }
+
+    private void writeUserToFile(String user, String pass) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userName", user );
+            jsonObject.put("pasword", pass);
+        } catch (JSONException e) {
+
+        }
+        // Convert JsonObject to String Format
+        String userString = jsonObject.toString();
+        // Define the File Path and its Name
+        try {
+            File file = new File(getApplication().getFilesDir(),user+".json");
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(userString);
+            bufferedWriter.close();
+        } catch (IOException e) {
+
+        }
     }
 
 
