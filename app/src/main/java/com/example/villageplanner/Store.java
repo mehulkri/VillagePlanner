@@ -1,6 +1,5 @@
 package com.example.villageplanner;
 
-import java.util.Objects;
 
 public class Store {
     private final String name;
@@ -8,12 +7,14 @@ public class Store {
     // closingTimes[day #] = hour at which the store closes
     // e.g. openingTimes[1] = 8.25 means store opens 8:15am on Monday
     // latitude and longitude describe physical location on globe
-    private final double openingTime, closingTime, latitude, longitude;
+    private final double openingTime, closingTime;
+    private final double latitude, longitude;
 
     public Store(String id) {
-        name = id.toLowerCase();
+        name = id;
+        id = id.toLowerCase();
         // ToDo: Pull from a JSON/Firebase
-        switch (name) {
+        switch (id) {
             case "amazon locker":
                 openingTime=9;
                 closingTime=21;
@@ -23,8 +24,8 @@ public class Store {
             case "cava":
                 openingTime=10.75;
                 closingTime=22;
-                latitude=34.03105090118111;
-                longitude=-118.28413292847169;
+                latitude=34.025289107299386;
+                longitude=-118.28452640000003;
                 break;
             case "chinese street food":
                 openingTime=11;
@@ -61,12 +62,6 @@ public class Store {
                 closingTime=21;
                 latitude=34.02481796607293;
                 longitude=-118.28573927406285;
-                break;
-            case "health hut":
-                openingTime=10;
-                closingTime=20; // pure guess
-                latitude=34.02540459564112;
-                longitude=-118.28506181619623;
                 break;
             case "insomnia":
                 openingTime=11;
@@ -115,12 +110,6 @@ public class Store {
                 closingTime=18;
                 latitude=34.024612998127054;
                 longitude=-118.28534649935264;
-                break;
-            case "supamu":
-                openingTime=12;
-                closingTime=19;
-                latitude=34.02489424475652;
-                longitude=-118.2856741892098;
                 break;
             case "target":
                 openingTime=7;
@@ -182,8 +171,15 @@ public class Store {
             return -1;
         }
         else{
-            // ToDo: make this not constant
-            return 10;
+            int upper = 20;
+            int lower = 10;
+            return (int) (Math.random() * (upper - lower)) + lower;
         }
+    }
+
+    double walkTime(){
+        int upper = 30;
+        int lower = 20;
+        return (int) (Math.random() * (upper - lower)) + lower;
     }
 }

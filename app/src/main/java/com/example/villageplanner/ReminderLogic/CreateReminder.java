@@ -20,6 +20,7 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +53,7 @@ public class CreateReminder extends AppCompatActivity {
     private CoordinatorLayout snackLayout;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
+    private Location lastKnownLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,11 @@ public class CreateReminder extends AppCompatActivity {
 
         // Get reminder Intent
         Reminder remind = (Reminder) getIntent().getSerializableExtra("Reminder");
-
+        Bundle extras = getIntent().getExtras();
+        // Get reminder Intent
+        if (extras != null) {
+            lastKnownLocation = extras.getParcelable("location");
+        }
         // Set-up the spinner for locations
         locations = findViewById(R.id.loc_spin);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -214,6 +220,8 @@ public class CreateReminder extends AppCompatActivity {
         }
         UUID reminderId = UUID.randomUUID();
         Reminder remind = new Reminder(location, titular, time, des, reminderId.toString(), userId);
+        remind.setLastKnownLocation(lastKnownLocation);
+
         remind.writeToJSONFile(getApplicationContext());
         return remind;
     }

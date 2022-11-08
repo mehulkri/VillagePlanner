@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.villageplanner.BuildConfig;
 import com.example.villageplanner.R;
+import com.example.villageplanner.ReminderLogic.ReminderPage;
 import com.example.villageplanner.Store;
 import com.example.villageplanner.directionHelpers.FetchURL;
 import com.example.villageplanner.directionHelpers.TaskLoadedCallback;
@@ -30,6 +31,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -44,6 +46,9 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 public class HomepageActivity extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback {
 
     private GoogleMap mMap;
@@ -56,6 +61,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
     private CameraPosition cameraPosition;
+    private Stack<Marker> markers;
     Polyline currPolyline;
 
     @Override
@@ -70,7 +76,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        markers = new Stack<>();
         checkMyPermission();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -148,6 +154,9 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     }
 
     public void buttonClick(View view) {
+        while(!markers.isEmpty()) {
+            markers.pop().remove();
+        }
         getDeviceLocation();
         Spinner storeSpinner = (Spinner) findViewById(R.id.store);
         String storeName = String.valueOf(storeSpinner.getSelectedItem());
@@ -157,9 +166,9 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         MarkerOptions myMarker= new MarkerOptions().position(new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude())).title("My Location");
 
         route(myMarker,storeMarker);
+        markers.add(mMap.addMarker(storeMarker));
+        markers.add(mMap.addMarker(myMarker));
 
-        mMap.addMarker(storeMarker);
-        mMap.addMarker(myMarker);
     }
 
     public void route(MarkerOptions myMarker, MarkerOptions storeMarker) {
@@ -182,5 +191,11 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     public void onTaskDone(Object... values) {
         if(currPolyline != null) currPolyline.remove();
         currPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+    }
+
+    public void goToReminders(View view) {
+        Intent i = new Intent(HomepageActivity.this, ReminderPage.class);
+        i.putExtra("location", lastKnownLocation);
+        startActivity(i);
     }
 }
