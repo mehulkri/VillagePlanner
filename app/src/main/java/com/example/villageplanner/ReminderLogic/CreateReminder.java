@@ -214,6 +214,7 @@ public class CreateReminder extends AppCompatActivity {
         }
         UUID reminderId = UUID.randomUUID();
         Reminder remind = new Reminder(location, titular, time, des, reminderId.toString(), userId);
+        remind.writeToJSONFile(getApplicationContext());
         return remind;
     }
 

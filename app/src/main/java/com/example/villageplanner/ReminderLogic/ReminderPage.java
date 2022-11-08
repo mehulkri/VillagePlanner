@@ -1,6 +1,7 @@
 package com.example.villageplanner.ReminderLogic;
 
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.addReminderToDatabase;
+import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.dataSnapshotToReminder;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getReminders;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
 import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
@@ -25,6 +26,12 @@ import android.widget.Toast;
 import com.example.villageplanner.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -107,22 +114,31 @@ public class ReminderPage extends AppCompatActivity {
     }
 
     private void populate() {
-        try {
-            ArrayList<Reminder> firebaseReminders = getReminders("4");
-            if(firebaseReminders.isEmpty()) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference reference =  database.getReference("Reminders").child("4");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    for(DataSnapshot child : dataSnapshot.getChildren()) {
+                        Reminder remind  = dataSnapshotToReminder(child);
+                        reminders.add(remind);
+                        setAlarm(remind);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    System.out.println("I hate this!!!");
+                }
+            });
+            if(reminders.size() == 0) {
                 displaySnackbar("Firebase could not get reminders", null, null);
-            } else {
-                firebaseReminders.forEach(r -> {
-                    this.reminders.add(r);
-                    setAlarm(r);
-                });
+                for(int i=0; i < 10; i++) {
+                    this.reminders.add(new Reminder("Cava", "Eat at Cava", LocalDateTime.now(), "This is the description", "efdsfdfds", "0"));
+                }
             }
-        } catch (Exception e) {
-            displaySnackbar("Firebase could not get reminders", null, null);
-        }
-        for(int i=0; i < 10; i++) {
-            this.reminders.add(new Reminder("Cava", "Eat at Cava", LocalDateTime.now(), "This is the description", "efdsfdfds", "0"));
-        }
 
     }
 
