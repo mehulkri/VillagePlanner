@@ -10,7 +10,7 @@ public class Store {
     // e.g. openingTimes[1] = 8.25 means store opens 8:15am on Monday
     // latitude and longitude describe physical location on globe
     private final double openingTime, closingTime;
-    private final BigDecimal latitude, longitude;
+    private final double latitude, longitude;
 
     public Store(String id) {
         name = id;
@@ -20,122 +20,122 @@ public class Store {
             case "amazon locker":
                 openingTime=9;
                 closingTime=21;
-                latitude=BigDecimal.valueOf(34.025808154311036);
-                longitude=BigDecimal.valueOf(-118.28539312174385);
+                latitude=34.025808154311036;
+                longitude=-118.28539312174385;
                 break;
             case "cava":
                 openingTime=10.75;
                 closingTime=22;
-                latitude=BigDecimal.valueOf(34.03105090118111);
-                longitude=BigDecimal.valueOf(-118.28413292847169);
+                latitude=34.03105090118111;
+                longitude=-118.28413292847169;
                 break;
             case "chinese street food":
                 openingTime=11;
                 closingTime=1;
-                latitude=BigDecimal.valueOf(34.024665246863506);
-                longitude=BigDecimal.valueOf(-118.28394359195589);
+                latitude=34.024665246863506;
+                longitude=-118.28394359195589;
                 break;
             case "city tacos":
                 openingTime=11.5;
                 closingTime=21;
-                latitude=BigDecimal.valueOf(34.024304277502345);
-                longitude=BigDecimal.valueOf(-118.28465076037423);
+                latitude=34.024304277502345;
+                longitude=-118.28465076037423;
                 break;
             case "credit union":
                 openingTime=9;
                 closingTime=18;
-                latitude=BigDecimal.valueOf(34.025983134719304);
-                longitude=BigDecimal.valueOf(-118.28526646222342);
+                latitude=34.025983134719304;
+                longitude=-118.28526646222342;
                 break;
             case "fedex":
                 openingTime=9;
                 closingTime=18;
-                latitude=BigDecimal.valueOf(34.02603615644265);
-                longitude=BigDecimal.valueOf(-118.2860711644111);
+                latitude=34.02603615644265;
+                longitude=-118.2860711644111;
                 break;
             case "fruit + candy":
                 openingTime=10;
                 closingTime=20;
-                latitude=BigDecimal.valueOf(34.02458338967535);
-                longitude=BigDecimal.valueOf(-118.28430066037421);
+                latitude=34.02458338967535;
+                longitude=-118.28430066037421;
                 break;
             case "greenleaf":
                 openingTime=11;
                 closingTime=21;
-                latitude=BigDecimal.valueOf(34.02481796607293);
-                longitude=BigDecimal.valueOf(-118.28573927406285);
+                latitude=34.02481796607293;
+                longitude=-118.28573927406285;
                 break;
             case "insomnia":
                 openingTime=11;
                 closingTime=1;
-                latitude=BigDecimal.valueOf(34.02521769609158);
-                longitude=BigDecimal.valueOf(-118.28535583153861);
+                latitude=34.02521769609158;
+                longitude=-118.28535583153861;
                 break;
             case "kaitlyn":
                 openingTime=11;
                 closingTime=19;
-                latitude=BigDecimal.valueOf(34.02983041258225);
-                longitude=BigDecimal.valueOf(-118.2829445172315);
+                latitude=34.02983041258225;
+                longitude=-118.2829445172315;
                 break;
             case "kobunga":
                 openingTime=11;
                 closingTime=20;
-                latitude=BigDecimal.valueOf(34.02482058871474);
-                longitude=BigDecimal.valueOf(-118.28551882174382);
+                latitude=34.02482058871474;
+                longitude=-118.28551882174382;
                 break;
             case "mac repair clinic":
                 openingTime=11;
                 closingTime=18;
-                latitude=BigDecimal.valueOf(34.02461220892162);
-                longitude=BigDecimal.valueOf(-118.28532907201817);
+                latitude=34.02461220892162;
+                longitude=-118.28532907201817;
                 break;
             case "ramen kenjo":
                 openingTime=11;
                 closingTime=22;
-                latitude=BigDecimal.valueOf(34.024721160531946);
-                longitude=BigDecimal.valueOf(-118.28552280825059);
+                latitude=34.024721160531946;
+                longitude=-118.28552280825059;
                 break;
             case "solé bicycles":
                 openingTime=10;
                 closingTime=18;
-                latitude=BigDecimal.valueOf(34.02885324684136);
-                longitude=BigDecimal.valueOf(-118.28437379634839);
+                latitude=34.02885324684136;
+                longitude=-118.28437379634839;
                 break;
             case "starbucks":
                 openingTime=8;
                 closingTime=20;
-                latitude=BigDecimal.valueOf(34.02499276658639);
-                longitude=BigDecimal.valueOf(-118.2840845226406);
+                latitude=34.02499276658639;
+                longitude=-118.2840845226406;
                 break;
             case "sunlife organics":
                 openingTime=8;
                 closingTime=18;
-                latitude=BigDecimal.valueOf(34.024612998127054);
-                longitude=BigDecimal.valueOf(-118.28534649935264);
+                latitude=34.024612998127054;
+                longitude=-118.28534649935264;
                 break;
             case "target":
                 openingTime=7;
                 closingTime=22;
-                latitude=BigDecimal.valueOf(34.026132234437995);
-                longitude=BigDecimal.valueOf(-118.2841647161962);
+                latitude=34.026132234437995;
+                longitude=-118.2841647161962;
                 break;
             case "trader joe's":
                 openingTime=8;
                 closingTime=22;
-                latitude=BigDecimal.valueOf(34.026316060943586);
-                longitude=BigDecimal.valueOf(-118.28452502784029);
+                latitude=34.026316060943586;
+                longitude=-118.28452502784029;
                 break;
             case "fitness center":
                 openingTime=8;
                 closingTime=23;
-                latitude=BigDecimal.valueOf(34.02489726921062);
-                longitude=BigDecimal.valueOf(-118.28591982174385);
+                latitude=34.02489726921062;
+                longitude=-118.28591982174385;
                 break;
             default:
                 openingTime=0;
                 closingTime=0;
-                latitude=BigDecimal.valueOf(0);
-                longitude=BigDecimal.valueOf(0);
+                latitude=0;
+                longitude=0;
                 break;
         }
     }
@@ -149,10 +149,10 @@ public class Store {
     public double getClosingTime() {
         return closingTime;
     }
-    public BigDecimal getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
-    public BigDecimal getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
