@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.villageplanner.HomeLogic.HomepageActivity;
 import com.example.villageplanner.ImagePicker;
 import com.example.villageplanner.R;
 import com.example.villageplanner.ReminderLogic.ReminderPage;
@@ -178,29 +179,5 @@ public class CreateAccount extends AppCompatActivity {
         Snackbar snack = Snackbar.make(bottom, errorMessage, LENGTH_LONG);
         snack.show();
     }
-
-    private void writeUserToFile(String user, String pass) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("userName", user );
-            jsonObject.put("pasword", pass);
-        } catch (JSONException e) {
-
-        }
-        // Convert JsonObject to String Format
-        String userString = jsonObject.toString();
-        // Define the File Path and its Name
-        try {
-            File file = new File(getApplication().getFilesDir(),user+".json");
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(userString);
-            bufferedWriter.close();
-        } catch (IOException e) {
-
-        }
-    }
-
-
 
 }

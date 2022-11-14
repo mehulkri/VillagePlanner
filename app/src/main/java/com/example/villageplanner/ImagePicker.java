@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.villageplanner.HomeLogic.HomepageActivity;
 import com.example.villageplanner.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -88,6 +87,8 @@ public class ImagePicker extends AppCompatActivity {
                     startActivity(in);
 
                 }
+                Intent create = new Intent(ImagePicker.this , LoginActivity.class);
+                startActivity(create);
             }
         });
     }

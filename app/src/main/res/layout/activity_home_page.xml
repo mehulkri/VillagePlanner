@@ -11,11 +11,11 @@
         android:id="@+id/toolbar"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
-        android:background="#0F9D58"
+        android:background="#990000"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="USC Village"
-        app:titleTextColor="#ffff" />
+        app:titleTextColor="#ffff"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
@@ -74,7 +74,7 @@
             android:id="@+id/reminder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0F9D58"
+            android:background="#990000"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:title="Reminders"
