@@ -1,13 +1,17 @@
-package com.example.villageplanner;
+package com.example.villageplanner.CreateAccountTests;
 
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validateEmail;
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validatePassword;
+import static com.example.villageplanner.createAccount.AccountCreationValidator.validatePasswordStrength;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class CreateAccountTest {
+import java.util.ArrayList;
+
+public class AccountCreationValidatorTests {
 
     @Test
     public void emailValidator_CorrectEmailSimple_ReturnsTrue() {
@@ -42,5 +46,29 @@ public class CreateAccountTest {
         assertTrue(!validatePassword(passwordOne, passwordTwo));
         assertTrue(!validatePassword(passwordTwo, passwordThree));
         assertTrue(!validatePassword(passwordThree, passwordFour));
+    }
+
+    @Test
+    public void testPasswordStrengthBad() {
+        ArrayList<String> passwords = new ArrayList<String>();
+        // Only letters
+        passwords.add("ksjlsjkjfljdksljl");
+        // Only letters and numbers
+        passwords.add("human1234");
+        // Only letters, numbers, and special characters
+        passwords.add("lemon3456!!");
+        // Short password but correct
+        passwords.add("Ab1$2");
+        // Only Capital letters and special characters
+        passwords.add("HELLO418902");
+        // Loop through the tests
+        passwords.forEach(p -> assertFalse(validatePasswordStrength(p)));
+    }
+
+    @Test
+    public void testPasswordStrengthGood() {
+        assertTrue(validatePasswordStrength("SupperString2948098490^835"));
+        assertTrue(validatePasswordStrength("Normal#$532"));
+        assertTrue(validatePasswordStrength("This4Is%The*Best!@Pass&Word^IN@dU!World"));
     }
 }

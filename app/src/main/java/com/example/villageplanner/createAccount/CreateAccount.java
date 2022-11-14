@@ -1,6 +1,7 @@
 package com.example.villageplanner.createAccount;
 
 import static android.widget.Toast.LENGTH_LONG;
+import static com.example.villageplanner.createAccount.AccountCreationValidator.getPassValidator;
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validateEmail;
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validatePassword;
 import static com.example.villageplanner.createAccount.AccountCreationValidator.validatePasswordStrength;
@@ -91,7 +92,6 @@ public class CreateAccount extends AppCompatActivity {
                 // TODO: Delete when done
                 if(canProceed) {
                     // Write to JSON
-                    writeUserToFile(getInfo(email), getInfo(password));
                     Intent next = new Intent(CreateAccount.this, ImagePicker.class);
                     startActivity(next);
                 }
@@ -116,13 +116,8 @@ public class CreateAccount extends AppCompatActivity {
         // Get information
         boolean isValid = true;
         email.validateWith(new RegexpValidator("Invalid!", "^(.+)@(\\S+)$"));
-        String passwordRegex = "^(?=.*[0-9])"
-                + "(?=.*[a-z])(?=.*[A-Z])"
-                + "(?=.*[@#$%^&+=!])"
-                + "(?=\\S+$).{8,20}$";
-        RegexpValidator passwordValidator = new RegexpValidator("Weak password", passwordRegex);
-        password.validateWith(passwordValidator);
-        confirmPassword.validateWith(passwordValidator);
+        password.validateWith(getPassValidator());
+        confirmPassword.validateWith(getPassValidator());
         // Validate passwords match
         if(!validatePassword(passwordOne, passwordTwo)) {
             setErrorText("Not the same password", password);
@@ -134,7 +129,7 @@ public class CreateAccount extends AppCompatActivity {
             isValid = false;
         }
         // Validate password is strong
-        if(!validatePasswordStrength(passwordOne, passwordValidator)) {
+        if(!validatePasswordStrength(passwordOne)) {
             isValid = false;
             String passwordRules = "Password must have: One numeric character, one lowercase character, " +
                     "one uppercase character, one special character, and should be between 8 to 40 characters in length";
