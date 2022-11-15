@@ -156,7 +156,7 @@ public class ReminderPage extends AppCompatActivity {
                     System.out.println("I hate this!!!");
                 }
             });
-
+        this.reminders.add(new Reminder("Cava", "Example Reminder", LocalDateTime.now(), "This is the description", "efdsfdfds", "4"));
 
     }
 
@@ -223,5 +223,6 @@ public class ReminderPage extends AppCompatActivity {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, getReminderMilli(notify),
                 AlarmManager.INTERVAL_DAY*365,pendingIntent);
         Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
+        populate();
     }
 }
