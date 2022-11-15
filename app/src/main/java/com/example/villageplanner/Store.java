@@ -189,7 +189,7 @@ public class Store {
         return longitude;
     }
 
-    boolean isClosed(double time){
+    public boolean isClosed(double time){
         if (closingTime > openingTime) {
             // want to ensure time is in interval (openingTime, closingTime)
             return (time < closingTime && time > openingTime);

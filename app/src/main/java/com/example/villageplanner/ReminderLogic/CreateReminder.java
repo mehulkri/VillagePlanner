@@ -17,6 +17,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 
+import com.example.villageplanner.Store;
 import com.google.android.material.timepicker.MaterialTimePicker;
 
 import android.content.Context;
@@ -198,7 +199,7 @@ public class CreateReminder extends AppCompatActivity {
             return false;
         }
         String loc = locations.getSelectedItem().toString();
-        String hoursError = validateHoursOfOperation(hour, loc);
+        String hoursError = validateHoursOfOperation(hour, minute, loc);
         if(!hoursError.isEmpty()) {
             printError(hoursError);
             return false;

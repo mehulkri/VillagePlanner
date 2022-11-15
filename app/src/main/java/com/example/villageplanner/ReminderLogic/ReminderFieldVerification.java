@@ -42,10 +42,11 @@ public class ReminderFieldVerification {
         return error;
     }
 
-    public static String validateHoursOfOperation(int hour, String location) {
+    public static String validateHoursOfOperation(int hour, int minute, String location) {
         Store loc = new Store(location);
         String error = "";
-        if(hour < 8 || hour > 22) {
+        double time = hour + (minute/60);
+        if(!loc.isClosed(time)) {
             error += location + " is not open at this hour. Please choose a different time.";
         }
         return error;
