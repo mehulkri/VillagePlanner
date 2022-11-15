@@ -1,4 +1,5 @@
 package com.example.villageplanner.helperAPI;
+import android.content.res.Resources;
 import com.example.villageplanner.R;
 
 public class StorePictureHelper {
@@ -40,5 +41,14 @@ public class StorePictureHelper {
             default:
                 return R.drawable.defaultvillage;
         }
+    }
+
+    public static int getIndexFromValue(String location, String[] locations) {
+        for(int i=0; i < locations.length; i++) {
+            if(locations[i].equals(location)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

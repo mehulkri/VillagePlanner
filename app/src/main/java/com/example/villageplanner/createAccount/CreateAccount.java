@@ -104,10 +104,6 @@ public class CreateAccount extends AppCompatActivity {
             public void onClick(View v) {
                 Intent login = new Intent(CreateAccount.this, LoginActivity.class);
                 startActivity(login);
-
-                // pass the constant to compare it
-                // with the returned requestCode
-            //    startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
             }
         });
     }
@@ -140,7 +136,7 @@ public class CreateAccount extends AppCompatActivity {
         return isValid;
     }
 
-    public static String getInfo(MaterialEditText text) {
+    private static String getInfo(MaterialEditText text) {
         return text.getText().toString();
     }
 

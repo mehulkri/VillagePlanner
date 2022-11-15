@@ -5,6 +5,7 @@ import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.a
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getUserId;
 import static com.example.villageplanner.ReminderLogic.ReminderFieldVerification.validateDate;
 import static com.example.villageplanner.ReminderLogic.ReminderFieldVerification.validateHoursOfOperation;
+import static com.example.villageplanner.helperAPI.StorePictureHelper.getIndexFromValue;
 import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -78,7 +79,8 @@ public class CreateReminder extends AppCompatActivity {
         // Apply the adapter to the spinner
         locations.setAdapter(adapter);
         if(remind != null) {
-            int index = getIndexFromValue(remind.getLocation());
+            String[] locs = getResources().getStringArray(R.array.store_list);
+            int index = getIndexFromValue(remind.getLocation(), locs);
             if(index >= 0) {
                 locations.setSelection(index);
             }
@@ -222,8 +224,6 @@ public class CreateReminder extends AppCompatActivity {
         UUID reminderId = UUID.randomUUID();
         Reminder remind = new Reminder(location, titular, time, des, reminderId.toString(), userId);
         remind.setLastKnownLocation(lastKnownLocation);
-
-        remind.writeToJSONFile(getApplicationContext());
         return remind;
     }
 
@@ -273,16 +273,5 @@ public class CreateReminder extends AppCompatActivity {
     private void setDateText(int year, int month, int day) {
         arrivalDate.setText(String.format(Locale.getDefault(),
                 "%02d/%02d/%04d", month, day, year));
-    }
-
-    private int getIndexFromValue(String location) {
-        Resources res = getResources();
-        String[] locations = res.getStringArray(R.array.store_list);
-        for(int i=0; i < locations.length; i++) {
-            if(locations[i].equals(location)) {
-                return i;
-            }
-        }
-        return -1;
     }
 }

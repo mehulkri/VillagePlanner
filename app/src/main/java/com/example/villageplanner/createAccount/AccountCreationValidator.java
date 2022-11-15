@@ -26,7 +26,7 @@ public class AccountCreationValidator {
         String passwordRegex = "^(?=.*[0-9])"
                 + "(?=.*[a-z])(?=.*[A-Z])"
                 + "(?=.*[@#$%^&+=!])"
-                + "(?=\\S+$).{8,20}$";
+                + "(?=\\S+$).{8,40}$";
         RegexpValidator passwordValidator = new RegexpValidator("Weak password",passwordRegex);
         return passwordValidator;
     }

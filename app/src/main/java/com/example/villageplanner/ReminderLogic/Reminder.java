@@ -29,7 +29,7 @@ public class Reminder implements Serializable {
     private Location lastKnownLocation;
 
 
-    Reminder(String loc, String header, LocalDateTime time, String des, String rId, String uId) {
+    public Reminder(String loc, String header, LocalDateTime time, String des, String rId, String uId) {
         setLocation(loc);
         setTitle(header);
         setTargetTime(time);
@@ -37,7 +37,6 @@ public class Reminder implements Serializable {
         reminderId = rId;
         targetTime = time;
         remindTime = calculateReminderTime();
-        remindTime = targetTime;
         userId = uId;
     }
     public Location getLastKnownLocation() {return lastKnownLocation;}
@@ -104,52 +103,5 @@ public class Reminder implements Serializable {
         Store location = new Store(this.location);
         long queueTime = location.queueTime();
         return targetTime.minusMinutes(queueTime+10);
-    }
-
-    public void writeToJSONFile(Context context) {
-        String userString = reminderToJsonString();
-        File file = new File(context.getFilesDir(), "reminders.json");
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(userString);
-            bufferedWriter.close();
-        } catch (IOException e) {
-
-        }
-    }
-
-    private String reminderToJsonString() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("userId", userId);
-            jsonObject.put("title", title);
-            jsonObject.put("description", description);
-            jsonObject.put("reminderId", reminderId);
-            jsonObject.put("targetTime", timeToJSON(targetTime));
-            jsonObject.put("remindTime", timeToJSON(remindTime));
-            return jsonObject.toString();
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    private JSONObject timeToJSON(LocalDateTime time) {
-        JSONObject jsonObject = new JSONObject();
-        int year = time.getYear();
-        int month = time.getMonthValue();
-        int day = time.getDayOfMonth();
-        int hour = time.getHour();
-        int minute = time.getMinute();
-        try {
-            jsonObject.put("year", year);
-            jsonObject.put("month", month);
-            jsonObject.put("day", day);
-            jsonObject.put("hour", hour);
-            jsonObject.put("minute", minute);
-            return jsonObject;
-        } catch (Exception e) {
-            return null;
-        }
     }
 }

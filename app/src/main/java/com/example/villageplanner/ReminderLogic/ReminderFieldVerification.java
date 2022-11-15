@@ -1,5 +1,7 @@
 package com.example.villageplanner.ReminderLogic;
 
+import com.example.villageplanner.Store;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -41,6 +43,7 @@ public class ReminderFieldVerification {
     }
 
     public static String validateHoursOfOperation(int hour, String location) {
+        Store loc = new Store(location);
         String error = "";
         if(hour < 8 || hour > 22) {
             error += location + " is not open at this hour. Please choose a different time.";
