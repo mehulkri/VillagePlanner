@@ -178,11 +178,11 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         new FetchURL(HomepageActivity.this).execute(url, "walking");
     }
 
-    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+    public static String getUrl(LatLng origin, LatLng dest, String directionMode) {
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
         String mode = "mode=" + directionMode;
-        String parameters= str_origin + "&" + str_dest + "&" + mode;
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
         String output = "json";
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + BuildConfig.MAPS_API_KEY;
         return url;

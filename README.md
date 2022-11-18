@@ -18,3 +18,4 @@ VillagePlanner is an Android application that seeks to make the user's experienc
 
 7. Run the app and enjoy (if login does not work, use guest login).
 
+Note: If firebase connection is not live, it will not display reminders.
