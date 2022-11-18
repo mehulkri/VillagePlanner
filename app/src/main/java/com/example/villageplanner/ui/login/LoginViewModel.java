@@ -1,5 +1,6 @@
 package com.example.villageplanner.ui.login;
 
+import androidx.core.util.PatternsCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,7 +19,7 @@ public class LoginViewModel extends ViewModel {
     private LoginRepository loginRepository;
     private boolean loginSuccess = false;
 
-    LoginViewModel(LoginRepository loginRepository) {
+    public LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
 
@@ -63,7 +64,7 @@ public class LoginViewModel extends ViewModel {
             return false;
         }
         if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+            return PatternsCompat.EMAIL_ADDRESS.matcher(username).matches();
         } else {
             return !username.trim().isEmpty();
         }
@@ -73,4 +74,5 @@ public class LoginViewModel extends ViewModel {
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }
+
 }

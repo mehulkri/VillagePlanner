@@ -1,6 +1,5 @@
 package com.example.villageplanner.StoreTests;
 import static org.junit.Assert.assertEquals;
-import com.google.android.gms.maps.model.LatLng;
 import org.junit.Test;
 
 import com.example.villageplanner.Store;
@@ -35,7 +34,7 @@ public class GetTest{
         Store storeThree = new Store("KobUNGa");
         assertEquals(22, storeOne.getClosingTime(), 0);
         assertEquals(21, storeTwo.getClosingTime(), 0);
-        assertEquals(19, storeThree.getClosingTime(), 0);
+        assertEquals(20, storeThree.getClosingTime(), 0);
     }
 
     @Test
