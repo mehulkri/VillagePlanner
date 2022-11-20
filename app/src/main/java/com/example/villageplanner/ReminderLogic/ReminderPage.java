@@ -2,13 +2,11 @@ package com.example.villageplanner.ReminderLogic;
 
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.addReminderToDatabase;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.dataSnapshotToReminder;
-import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getReminders;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getUserId;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
 import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
 import static com.example.villageplanner.helperAPI.TimeHelper.isExpired;
 
-import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +25,6 @@ import android.view.View;
 import android.widget.Toast;
 
 
-import com.example.villageplanner.HomeLogic.HomepageActivity;
 import com.example.villageplanner.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -159,6 +156,7 @@ public class ReminderPage extends AppCompatActivity {
                     System.out.println("I hate this!!!");
                 }
             });
+
             if(reminders.isEmpty()) {
                 LocalDateTime time = LocalDateTime.now();
                 Reminder remind = new Reminder("Village", "Test Title", time, "Having fun at the Village today",
@@ -233,5 +231,6 @@ public class ReminderPage extends AppCompatActivity {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, getReminderMilli(notify),
                 AlarmManager.INTERVAL_DAY*365,pendingIntent);
         Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
+        populate();
     }
 }

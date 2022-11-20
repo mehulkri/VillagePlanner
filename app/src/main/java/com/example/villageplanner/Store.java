@@ -206,9 +206,9 @@ public class Store {
 //            return -1;
 //        }
 //        else{
-            int upper = 20;
-            int lower = 10;
-            return (long) (Math.random() * (upper - lower)) + lower;
+//            int upper = 20;
+//            int lower = 10;
+            return (long) ((long) closingTime-openingTime);
 //        }
     }
 
