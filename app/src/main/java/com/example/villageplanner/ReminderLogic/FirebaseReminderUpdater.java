@@ -74,7 +74,7 @@ public class FirebaseReminderUpdater {
         if(currentUser != null) {
             return currentUser.getUid();
         } else {
-            return "";
+            return "4";
         }
     }
 

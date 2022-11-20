@@ -102,6 +102,8 @@ public class CreateReminder extends AppCompatActivity {
             year = LocalDate.now().getYear();
             month =  LocalDate.now().getMonthValue();
             day = LocalDateTime.now().getDayOfMonth();
+            hour = LocalDateTime.now().getHour();
+            minute = (LocalDateTime.now().getMinute() + 10) % 60;
         } else {
             LocalDateTime target = remind.getTargetTime();
             setDateText(target.getYear(), target.getMonthValue(), target.getDayOfMonth());
