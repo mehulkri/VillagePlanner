@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.villageplanner.R;
@@ -47,6 +48,12 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return items.size();
     }
 
+    @VisibleForTesting
+    public void addReminder(Reminder notify) {
+        items.add(notify);
+        notifyItemInserted(items.size()-1);
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -64,4 +71,5 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         vh.time.setText(item.getTargetTimeString());
         vh.data = item;
     }
+
 }

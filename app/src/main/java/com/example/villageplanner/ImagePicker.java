@@ -69,7 +69,10 @@ public class ImagePicker extends AppCompatActivity {
                 if(image != null) {
                     // Upload image to Firebase
                     FirebaseAuth auth = FirebaseAuth.getInstance();
-                    String email = auth.getCurrentUser().getEmail();
+                    String email = getIntent().getStringExtra("Email");
+                    if(email == null) {
+                        email = "guest@usc.edu";
+                    }
                     storageRef = FirebaseStorage.getInstance().getReference().child("/UserProfilePictures").child(email + "_pic");
                     storageRef.putFile(image)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

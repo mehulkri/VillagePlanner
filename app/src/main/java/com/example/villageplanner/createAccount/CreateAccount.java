@@ -89,10 +89,9 @@ public class CreateAccount extends AppCompatActivity {
                     canProceed = false;
                 }
                 // Move to next screen
-                // TODO: Delete when done
                 if(canProceed) {
-                    // Write to JSON
                     Intent next = new Intent(CreateAccount.this, ImagePicker.class);
+                    next.putExtra("Email", getInfo(email));
                     startActivity(next);
                 }
             }
@@ -111,7 +110,6 @@ public class CreateAccount extends AppCompatActivity {
     private boolean tryValidate(String fullName, String emailAddr, String passwordOne, String passwordTwo) {
         // Get information
         boolean isValid = true;
-        email.validateWith(new RegexpValidator("Invalid!", "^(.+)@(\\S+)$"));
         password.validateWith(getPassValidator());
         confirmPassword.validateWith(getPassValidator());
         // Validate passwords match
@@ -122,6 +120,7 @@ public class CreateAccount extends AppCompatActivity {
         }
         // Validate email is valid
         if(!validateEmail(emailAddr)) {
+            setErrorText("Invalid email", email);
             isValid = false;
         }
         // Validate password is strong
@@ -159,11 +158,15 @@ public class CreateAccount extends AppCompatActivity {
         String emailAddr = getInfo(email);
         String passwordOne = getInfo(password);
         String passwordTwo = getInfo(confirmPassword);
-        boolean canProceed = checkFieldEmpty("Need to input full name.", name) &&
-                checkFieldEmpty("Need to input a password.", password) &&
-                checkFieldEmpty("Need to confirm the password", confirmPassword) &&
-                tryValidate(fullName, emailAddr, passwordOne, passwordTwo) ;
-        return canProceed;
+        boolean canProceed = checkFieldEmpty("Need to input full name.", name) &
+                checkFieldEmpty("Need to input a password.", password) &
+                checkFieldEmpty("Need to confirm the password", confirmPassword) &
+                checkFieldEmpty("Need to input an email", email);
+        if(canProceed) {
+            return tryValidate(fullName, emailAddr, passwordOne, passwordTwo) ;
+        } else {
+            return canProceed;
+        }
     }
 
     private void setError(String errorMessage) {

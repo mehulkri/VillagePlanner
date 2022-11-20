@@ -2,7 +2,7 @@ package com.example.villageplanner.ReminderLogic;
 
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.addReminderToDatabase;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.dataSnapshotToReminder;
-import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getReminders;
+import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getUserId;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
 import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
 import static com.example.villageplanner.helperAPI.TimeHelper.isExpired;
@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.Toast;
 
 
-import com.example.villageplanner.HomeLogic.HomepageActivity;
 import com.example.villageplanner.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import co.dift.ui.SwipeToAction;
 
@@ -71,12 +71,12 @@ public class ReminderPage extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-
+        adapter = new ReminderAdapter(this.reminders);
+        recyclerView.setAdapter(adapter);
         // Set reminders
         populate();
 
-        adapter = new ReminderAdapter(this.reminders);
-        recyclerView.setAdapter(adapter);
+
         plus = (FloatingActionButton) findViewById(R.id.add_remind);
 
         swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<Reminder>() {
@@ -125,7 +125,7 @@ public class ReminderPage extends AppCompatActivity {
 
     private void populate() {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference reference =  database.getReference("Reminders").child("4");
+            DatabaseReference reference =  database.getReference("Reminders").child(getUserId());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -156,7 +156,15 @@ public class ReminderPage extends AppCompatActivity {
                     System.out.println("I hate this!!!");
                 }
             });
-        this.reminders.add(new Reminder("Cava", "Example Reminder", LocalDateTime.now(), "This is the description", "efdsfdfds", "4"));
+
+            if(reminders.isEmpty()) {
+                LocalDateTime time = LocalDateTime.now();
+                Reminder remind = new Reminder("Village", "Test Title", time, "Having fun at the Village today",
+                        "cksjdklj", "4");
+                reminders.add(remind);
+                adapter.notifyItemInserted(reminders.size() -1);
+            }
+
 
     }
 
