@@ -142,10 +142,10 @@ public class ReminderPage extends AppCompatActivity {
                                 } catch (Exception e) {
                                     displaySnackbar("Could not remove reminder", null, null);
                                 }
-                            } else {
-                                reminders.add(remind);
-                                adapter.notifyItemInserted(reminders.size() -1);
-                                setAlarm(remind);
+                            } else if(!isInReminders(remind)) {
+                                    reminders.add(remind);
+                                    adapter.notifyItemInserted(reminders.size() -1);
+                                    setAlarm(remind);
                             }
                         }
                     }
@@ -232,5 +232,15 @@ public class ReminderPage extends AppCompatActivity {
                 AlarmManager.INTERVAL_DAY*365,pendingIntent);
         Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
         populate();
+    }
+
+    private boolean isInReminders(Reminder notify) {
+        for(Reminder r: reminders) {
+            if(r.getTitle().equals(notify.getTitle()) &&
+                    r.getLocation().equals(notify.getLocation())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
