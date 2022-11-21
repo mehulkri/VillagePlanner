@@ -65,10 +65,11 @@
                 android:text="@string/route" />
 
             <TextView
+                android:id="@+id/routingdisplay"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
-                android:textSize="30sp"/>
+                android:textSize="30sp" />
 
         <Button
             android:id="@+id/reminder"

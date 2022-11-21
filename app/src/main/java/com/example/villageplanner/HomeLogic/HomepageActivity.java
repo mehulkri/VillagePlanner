@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.villageplanner.BuildConfig;
@@ -166,16 +167,19 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         MarkerOptions storeMarker= new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).title(storeName);
         MarkerOptions myMarker= new MarkerOptions().position(new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude())).title("My Location");
 
-        route(myMarker,storeMarker);
+        route(myMarker,storeMarker, store);
         markers.add(mMap.addMarker(storeMarker));
         markers.add(mMap.addMarker(myMarker));
 
     }
 
-    public void route(MarkerOptions myMarker, MarkerOptions storeMarker) {
+    public void route(MarkerOptions myMarker, MarkerOptions storeMarker, Store store) {
         String url = getUrl(myMarker.getPosition(), storeMarker.getPosition(), "walking");
         System.out.println(url);
         new FetchURL(HomepageActivity.this).execute(url, "walking");
+        String eta = String.valueOf(store.queueTime()) + " minutes";
+        TextView routingDisplay = (TextView) findViewById (R.id.routingdisplay);
+        routingDisplay.setText(eta);
     }
 
     public static String getUrl(LatLng origin, LatLng dest, String directionMode) {
@@ -190,7 +194,10 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
 
     @Override
     public void onTaskDone(Object... values) {
-        if(currPolyline != null) currPolyline.remove();
+        if(currPolyline != null) {
+            currPolyline.setTag("Route");
+            currPolyline.remove();
+        }
         currPolyline = mMap.addPolyline((PolylineOptions) values[0]);
         System.out.println(values.getClass());
     }
