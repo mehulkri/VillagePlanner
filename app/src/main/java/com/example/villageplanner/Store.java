@@ -208,13 +208,7 @@ public class Store {
 //        else{
 //            int upper = 20;
 //            int lower = 10;
-            return (long) ((long) closingTime-openingTime);
+            return (long) ((long) closingTime - openingTime);
 //        }
-    }
-
-    double walkTime(){
-        int upper = 30;
-        int lower = 20;
-        return (int) (Math.random() * (upper - lower)) + lower;
     }
 }
