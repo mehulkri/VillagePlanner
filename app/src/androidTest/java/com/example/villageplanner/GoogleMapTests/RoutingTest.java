@@ -9,6 +9,9 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertTrue;
+
+import android.os.Build;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -20,6 +23,7 @@ import androidx.test.uiautomator.UiSelector;
 
 import com.example.villageplanner.HomeLogic.HomepageActivity;
 import com.example.villageplanner.R;
+import com.example.villageplanner.ui.login.LoginActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,25 +34,37 @@ import org.junit.runner.RunWith;
 
 public class RoutingTest {
     @Rule
-    public ActivityScenarioRule<HomepageActivity> activityRule =
-            new ActivityScenarioRule<HomepageActivity>(HomepageActivity.class);
+    public ActivityScenarioRule<LoginActivity> activityRule =
+            new ActivityScenarioRule<LoginActivity>(LoginActivity.class);
+
+    private void allowPermission()  {
+        if (Build.VERSION.SDK_INT >= 23) {
+            UiDevice mDevice = UiDevice.getInstance(getInstrumentation());
+            UiObject allowPermissions = mDevice.findObject(new UiSelector().clickable(true).checkable(false).index(1));
+            if (allowPermissions.exists()) {
+                try {
+                    allowPermissions.click();
+                } catch (UiObjectNotFoundException e) {
+                }
+            }
+        }
+    }
 
     @Test
     public void displayRouteTest() throws UiObjectNotFoundException {
+        onView(withId(R.id.failButton)).perform(click());
+        allowPermission();
         onView(withId(R.id.store)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("CAVA"))).perform(click());
         onView(withId(R.id.display_route)).perform(click());
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
-        UiObject storeMarkerOne = device.findObject(new UiSelector().descriptionContains("CAVA"));
-        UiObject myMarkerOne = device.findObject(new UiSelector().descriptionContains("My Location"));
-        UiObject routeOne = device.findObject(new UiSelector().descriptionContains("Route"));
-
-        onView(withId(R.id.store)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("City Tacos"))).perform(click());
         onView(withId(R.id.display_route)).perform(click());
-        UiObject storeMarkerTwo = device.findObject(new UiSelector().descriptionContains("City Tacos"));
-        UiObject myMarkerTwo = device.findObject(new UiSelector().descriptionContains("My Location"));
-        UiObject routeTwo = device.findObject(new UiSelector().descriptionContains("Route"));
-
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        device.swipe(300,300,200,200,10);
+        UiObject markerOne = device.findObject(new UiSelector()
+                .descriptionContains("Google Map")
+                .childSelector(new UiSelector().instance(1))
+        );
+        markerOne.waitForExists(10000);
+        markerOne.click();
     }
 }

@@ -58,7 +58,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     private Location lastKnownLocation;
     private static final int DEFAULT_ZOOM = 15;
     private final LatLng defaultLocation = new LatLng(34.025777343183165, -118.2849796291695);
-
+    boolean locationAvailable;
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
     private CameraPosition cameraPosition;
@@ -93,6 +93,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         if (locationPermissionGranted) {
             mMap.setMyLocationEnabled(true);
             getDeviceLocation();
+
         }
     }
 
@@ -139,6 +140,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                                locationAvailable = true;
                             }
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
@@ -146,10 +148,12 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
                             mMap.moveCamera(CameraUpdateFactory
                                     .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                            locationAvailable = false;
                         }
                     }
                 });
             }
+            else locationAvailable = false;
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
         }
@@ -165,8 +169,13 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         Store store = new Store(storeName);
 
         MarkerOptions storeMarker= new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).title(storeName);
-        MarkerOptions myMarker= new MarkerOptions().position(new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude())).title("My Location");
-
+        MarkerOptions myMarker;
+        if (locationAvailable) {
+            myMarker = new MarkerOptions().position(new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude())).title("My Location");
+        }
+        else {
+            return;
+        }
         route(myMarker,storeMarker, store);
         markers.add(mMap.addMarker(storeMarker));
         markers.add(mMap.addMarker(myMarker));
