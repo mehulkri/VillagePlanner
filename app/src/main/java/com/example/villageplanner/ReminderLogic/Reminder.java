@@ -70,14 +70,16 @@ public class Reminder implements Serializable {
     }
 
     public String getTargetTimeString() {
-        DateTimeFormatter formats = DateTimeFormatter.ofPattern("HH:mm a");
-        String output = targetTime.format(formats);
-        return output;
+        return getTimeString(targetTime);
     }
 
     public String getLeaveTime() {
+        return getTimeString(remindTime);
+    }
+
+    private String getTimeString(LocalDateTime time) {
         DateTimeFormatter formats = DateTimeFormatter.ofPattern("HH:mm a");
-        String output = remindTime.format(formats);
+        String output = time.format(formats);
         return output;
     }
 

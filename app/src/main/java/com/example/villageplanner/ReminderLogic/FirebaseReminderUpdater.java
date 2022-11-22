@@ -43,30 +43,6 @@ public class FirebaseReminderUpdater {
         }
     }
 
-    public static ArrayList<Reminder> getReminders(String userId) throws DatabaseException {
-        ArrayList<Reminder> reminders = new ArrayList<>();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference =  database.getReference("Reminders").child(userId);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                for(DataSnapshot child : dataSnapshot.getChildren()) {
-                    reminders.add(dataSnapshotToReminder(child));
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                System.out.println("I hate this!!!");
-            }
-        });
-
-        return reminders;
-
-    }
 
     public static String getUserId() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
