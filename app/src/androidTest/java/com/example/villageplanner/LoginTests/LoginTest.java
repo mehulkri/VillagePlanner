@@ -71,8 +71,11 @@ public class LoginTest {
             }
         }
     }
+
+
+
     @Test
-    public void correct() throws InterruptedException {
+    public void correct() {
         //Login with josh@usc.edu
             //a. Type in the correct views
             //b. Press login button (twice)
@@ -87,8 +90,11 @@ public class LoginTest {
         //Use intent checker in HomepageButtonTest List 55.
         onView(withId(R.id.login)).perform(click());
         //onView(withId(R.id.login)).perform(click());
-        wait(10000);
-//        allowPermission();
+        onView(withId(R.id.username)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText(pass), closeSoftKeyboard());
+        //Use intent checker in HomepageButtonTest List 55.
+        onView(withId(R.id.login)).perform(click());
+        allowPermission();
     }
 
 }
