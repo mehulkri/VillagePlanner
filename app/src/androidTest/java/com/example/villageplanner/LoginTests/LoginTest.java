@@ -73,13 +73,20 @@ public class LoginTest {
     }
 
     @Test
+    public void guest() {
+        // continue as guest
+        onView(withId(R.id.failButton)).perform(click());
+        allowPermission();
+    }
+
+    @Test
     public void incorrect() {
-        //Login with josh@usc.edu
+        //Login with fake email address
         //a. Type in the correct views
         //b. Press login button (twice)
         onView(withId(R.id.username)).perform(typeText("jerry@seinfeld.com"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("jerry123!"), closeSoftKeyboard());
-        //Use intent checker in HomepageButtonTest List 55.
+        //Check if I am still on login page by clicking on an element only in that page
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.login)).perform(click());
@@ -87,20 +94,22 @@ public class LoginTest {
 
     @Test
     public void correct() {
-        //Login with josh@usc.edu
-            //a. Type in the correct views
-            //b. Press login button (twice)
+        // Login with fake email address
         onView(withId(R.id.username)).perform(typeText("jerry@seinfeld.com"), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText("jerry123!"), closeSoftKeyboard());
-        //Use intent checker in HomepageButtonTest List 55.
+        //Check if I am still on login page by clicking on an element only in that page
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.login)).perform(click());
 
         onView(withId(R.id.username)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText(pass), closeSoftKeyboard());
-        //Use intent checker in HomepageButtonTest List 55.
+        //Check if I am still on login page by clicking on an element only in that page
         onView(withId(R.id.login)).perform(click());
-        //onView(withId(R.id.login)).perform(click());
+
+
+        //Login with josh@usc.edu
+        //a. Type in the correct views
+        //b. Press login button (twice)
         onView(withId(R.id.username)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.password)).perform(typeText(pass), closeSoftKeyboard());
         //Use intent checker in HomepageButtonTest List 55.
