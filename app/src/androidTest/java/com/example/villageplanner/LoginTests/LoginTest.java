@@ -72,7 +72,18 @@ public class LoginTest {
         }
     }
 
-
+    @Test
+    public void incorrect() {
+        //Login with josh@usc.edu
+        //a. Type in the correct views
+        //b. Press login button (twice)
+        onView(withId(R.id.username)).perform(typeText("jerry@seinfeld.com"), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("jerry123!"), closeSoftKeyboard());
+        //Use intent checker in HomepageButtonTest List 55.
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.login)).perform(click());
+    }
 
     @Test
     public void correct() {
