@@ -1,4 +1,4 @@
-package com.example.villageplanner.CreateAccountTests;
+package com.example.villageplanner.LoginTests;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class CreateAccountUITest {
+public class LoginTest {
 
     private static String pass = "";
     private static String email = "mehul.krishna@wsu.edu";
