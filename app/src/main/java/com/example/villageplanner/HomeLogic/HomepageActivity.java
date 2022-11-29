@@ -2,8 +2,6 @@ package com.example.villageplanner.HomeLogic;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import androidx.annotation.NonNull;
-
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
@@ -20,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.villageplanner.accountManager.AccountPage;
 import com.example.villageplanner.BuildConfig;
 import com.example.villageplanner.R;
 import com.example.villageplanner.ReminderLogic.ReminderPage;
@@ -38,7 +37,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -47,7 +45,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class HomepageActivity extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback {
@@ -214,4 +211,10 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         i.putExtra("location", lastKnownLocation);
         startActivity(i);
     }
+
+    public void goToAccountPage(View view) {
+        Intent i = new Intent(HomepageActivity.this, AccountPage.class);
+        startActivity(i);
+    }
+
 }

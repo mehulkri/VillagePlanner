@@ -15,5 +15,8 @@
     <string name="route">Route</string>
     <string name="routeto">Route to:</string>
     <string name="reminders">Reminders</string>
+    <string name="accountPage">Account</string>
+    <string name="logoff">Log Off</string>
+    <string name="homepage">Homepage</string>
 
 </resources>

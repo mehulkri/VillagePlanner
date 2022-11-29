@@ -71,19 +71,32 @@
                 android:gravity="center"
                 android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/reminder"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#990000"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:title="Reminders"
-            android:text="@string/reminders"
-            android:textSize="20sp"
+            android:layout_height="77dp"
             android:gravity="center"
-            app:titleTextColor="#ffff"
-            android:onClick="goToReminders"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/accountPage"
+                android:layout_width="205dp"
+                android:layout_height="wrap_content"
+                android:text="@string/accountPage"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:onClick="goToAccountPage"
+                />
+
+            <Button
+                android:id="@+id/reminder"
+                android:layout_width="205dp"
+                android:layout_height="wrap_content"
+                app:title="Reminders"
+                android:text="@string/reminders"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:onClick="goToReminders" />
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.villageplanner.HomeLogic.HomepageActivity;
+import com.example.villageplanner.ReminderLogic.ReminderPage;
 import com.example.villageplanner.createAccount.CreateAccount;
 import com.example.villageplanner.R;
 import com.example.villageplanner.databinding.ActivityLoginPageBinding;
@@ -78,49 +79,41 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
+        loginViewModel.getLoginFormState().observe(this, loginFormState -> {
+            if (loginFormState == null) {
+                return;
+            }
+            loginButton.setEnabled(loginFormState.isDataValid());
+            if (loginFormState.getUsernameError() != null) {
+                usernameEditText.setError(getString(loginFormState.getUsernameError()));
+            }
+            if (loginFormState.getPasswordError() != null) {
+                passwordEditText.setError(getString(loginFormState.getPasswordError()));
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                    goToHomepage();
-                    finish();
-                }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
+        loginViewModel.getLoginResult().observe(this, loginResult -> {
+            if (loginResult == null) {
+                return;
             }
+            loadingProgressBar.setVisibility(View.GONE);
+            if (loginResult.getError() != null) {
+                showLoginFailed(loginResult.getError());
+            }
+            if (loginResult.getSuccess() != null) {
+                updateUiWithUser(loginResult.getSuccess());
+                goToHomepage();
+                finish();
+            }
+            setResult(Activity.RESULT_OK);
+
+            //Complete and destroy login activity once successful
         });
 
-        loginFailure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent in = new Intent(LoginActivity.this, HomepageActivity.class);
-                startActivity(in);
-            }
+        assert loginFailure != null;
+        loginFailure.setOnClickListener(v -> {
+            Intent in = new Intent(LoginActivity.this, HomepageActivity.class);
+            startActivity(in);
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -142,43 +135,34 @@ public class LoginActivity extends AppCompatActivity {
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
-        // Normal Login
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
+        passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                Intent in;
-                if(loginViewModel.getLoginSuccess()) {
-                    in = new Intent(LoginActivity.this, HomepageActivity.class);
-                    startActivity(in);
-                } else {
-                    in = new Intent(LoginActivity.this, LoginActivity.class);
-                    startActivity(in);
-                }
+            }
+            return false;
+        });
+        // Normal Login
+        loginButton.setOnClickListener(v -> {
+            loadingProgressBar.setVisibility(View.VISIBLE);
+            loginViewModel.login(usernameEditText.getText().toString(),
+                    passwordEditText.getText().toString());
+            Intent in;
+            if(loginViewModel.getLoginSuccess()) {
+                in = new Intent(LoginActivity.this, HomepageActivity.class);
+                startActivity(in);
+            } else {
+                in = new Intent(LoginActivity.this, LoginActivity.class);
+                startActivity(in);
             }
         });
 
         // Create Account
-        createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent create = new Intent(LoginActivity.this , CreateAccount.class);
-                startActivity(create);
+        assert createAccount != null;
+        createAccount.setOnClickListener(v -> {
+            Intent create = new Intent(LoginActivity.this , CreateAccount.class);
+            startActivity(create);
 
-            }
         });
     }
 
@@ -233,6 +217,8 @@ public class LoginActivity extends AppCompatActivity {
         Intent i = new Intent(LoginActivity.this, HomepageActivity.class);
         startActivity(i);
     }
+
+
 
     private void reload() { }
 }

@@ -39,6 +39,9 @@
 <!--        </intent-filter>-->
         </activity>
         <activity
+            android:name=".accountManager.AccountPage"
+            android:exported="false" />
+        <activity
             android:name=".ReminderLogic.CreateReminder"
             android:exported="false"
             android:label="Create New Reminder"/>
