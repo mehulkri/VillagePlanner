@@ -1,6 +1,7 @@
 package com.example.villageplanner.ReminderTests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import android.location.Location;
 
@@ -30,5 +31,10 @@ public class ReminderTest {
         DateTimeFormatter formats = DateTimeFormatter.ofPattern("HH:mm a");
         String output = time.format(formats);
         assertEquals(r.getTargetTimeString(), output);
+        assertEquals("Cava", r.getLocation());
+        assertEquals(time, r.getTargetTime());
+        assertFalse(r.getLeaveTime().isEmpty());
+        assertEquals("sjfjlks", r.getReminderId());
+        assertEquals("54", r.getUserId());
     }
 }

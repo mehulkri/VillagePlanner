@@ -3,6 +3,7 @@ package com.example.villageplanner.ReminderLogic;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.VisibleForTesting;
@@ -23,6 +24,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public TextView titleView;
         public TextView location;
         public TextView time;
+        public ImageView icon;
 
         public RemindViewHolder(View v) {
             super(v);
@@ -30,6 +32,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             titleView = (TextView) v.findViewById(R.id.title);
             location = (TextView) v.findViewById(R.id.author);
             time = (TextView) v.findViewById(R.id.remind_time);
+            icon = (ImageView) v.findViewById(R.id.like_or_love);
         }
     }
 
@@ -51,7 +54,6 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @VisibleForTesting
     public void addReminder(Reminder notify) {
         items.add(notify);
-        notifyItemInserted(items.size()-1);
     }
 
     @Override
@@ -70,6 +72,10 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         vh.location.setText(item.getLocation());
         vh.time.setText(item.getTargetTimeString());
         vh.data = item;
+        if(item.isThisLiked()) {
+            vh.icon.setVisibility(View.VISIBLE);
+        }
+
     }
 
 }

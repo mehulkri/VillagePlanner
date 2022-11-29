@@ -1,5 +1,7 @@
 package com.example.villageplanner.ReminderLogic;
 
+import static com.example.villageplanner.helperAPI.TimeHelper.isExpired;
+
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class FirebaseReminderUpdater {
     private FirebaseReminderUpdater() {
@@ -84,7 +87,6 @@ public class FirebaseReminderUpdater {
               day, hour, minute);
         return newTime;
     }
-
 
 }
 

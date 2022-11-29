@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
 
@@ -92,6 +93,7 @@ public class CreateAccount extends AppCompatActivity {
                 if(canProceed) {
                     Intent next = new Intent(CreateAccount.this, ImagePicker.class);
                     next.putExtra("Email", getInfo(email));
+                    next.putExtra("Name", getInfo(name));
                     startActivity(next);
                 }
             }

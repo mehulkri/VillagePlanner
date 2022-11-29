@@ -34,7 +34,8 @@
         app:layout_constraintVertical_bias="0.209"
         app:met_floatingLabel="highlight"
         app:met_helperTextColor="@color/error_red"
-        app:met_primaryColor="@color/usc_red" />
+        app:met_primaryColor="@color/usc_red"
+        app:passwordToggleEnabled="true"/>
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/passOne"
@@ -51,7 +52,8 @@
         app:layout_constraintVertical_bias="0.71"
         app:met_floatingLabel="highlight"
         app:met_helperTextColor="@color/error_red"
-        app:met_primaryColor="@color/usc_red" />
+        app:met_primaryColor="@color/usc_red"
+        app:passwordToggleEnabled="true"/>
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/emailField"

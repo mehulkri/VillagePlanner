@@ -4,6 +4,7 @@ import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.a
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.dataSnapshotToReminder;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.getUserId;
 import static com.example.villageplanner.ReminderLogic.FirebaseReminderUpdater.removeReminderFromDatabase;
+import static com.example.villageplanner.helperAPI.ReminderHelper.reminderReadyToBeDisplayed;
 import static com.example.villageplanner.helperAPI.TimeHelper.getReminderMilli;
 import static com.example.villageplanner.helperAPI.TimeHelper.isExpired;
 
@@ -37,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -95,6 +97,9 @@ public class ReminderPage extends AppCompatActivity {
             @Override
             public boolean swipeRight(Reminder itemData) {
                 displaySnackbar(itemData.getTitle() + " liked", null, null);
+                itemData.like();
+                int pos = reminders.indexOf(itemData);
+                adapter.notifyItemChanged(pos);
                 return true;
             }
 
@@ -136,16 +141,10 @@ public class ReminderPage extends AppCompatActivity {
                     } else {
                         for(DataSnapshot child : dataSnapshot.getChildren()) {
                             Reminder remind  = dataSnapshotToReminder(child);
-                            if(isExpired(remind)) {
-                                try {
-                                    removeReminderFromDatabase(remind);
-                                } catch (Exception e) {
-                                    displaySnackbar("Could not remove reminder", null, null);
-                                }
-                            } else if(!isInReminders(remind)) {
-                                    reminders.add(remind);
-                                    adapter.notifyItemInserted(reminders.size() -1);
-                                    setAlarm(remind);
+                            if(reminderReadyToBeDisplayed(remind, reminders)) {
+                                reminders.add(remind);
+                                adapter.notifyItemInserted(reminders.size() -1);
+                                setAlarm(remind);
                             }
                         }
                     }
@@ -164,8 +163,7 @@ public class ReminderPage extends AppCompatActivity {
                 reminders.add(remind);
                 adapter.notifyItemInserted(reminders.size() -1);
             }
-
-
+        Collections.sort(reminders);
     }
 
 
@@ -177,6 +175,7 @@ public class ReminderPage extends AppCompatActivity {
         try {
             removeReminderFromDatabase(reminder);
             cancelAlarm();
+            Collections.sort(reminders);
         } catch (Exception e) {
             displaySnackbar(e.toString(), null, null);
         }
@@ -186,6 +185,7 @@ public class ReminderPage extends AppCompatActivity {
     private void addBook(int pos, Reminder book) {
         reminders.add(pos, book);
         adapter.notifyItemInserted(pos);
+        Collections.sort(reminders);
         // Add from Database
         boolean addition = addReminderToDatabase(book);
         if(addition == false) {
@@ -234,13 +234,7 @@ public class ReminderPage extends AppCompatActivity {
         populate();
     }
 
-    private boolean isInReminders(Reminder notify) {
-        for(Reminder r: reminders) {
-            if(r.getTitle().equals(notify.getTitle()) &&
-                    r.getLocation().equals(notify.getLocation())) {
-                return true;
-            }
-        }
-        return false;
+    private void reorderReminders() {
+
     }
 }

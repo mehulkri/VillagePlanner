@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class Reminder implements Serializable {
+public class Reminder implements Serializable, Comparable<Reminder> {
 
     private String location;
     private String title;
@@ -27,6 +27,7 @@ public class Reminder implements Serializable {
     private String reminderId;
     private LocalDateTime remindTime;
     private Location lastKnownLocation;
+    private boolean isLiked;
 
 
     public Reminder(String loc, String header, LocalDateTime time, String des, String rId, String uId) {
@@ -38,6 +39,7 @@ public class Reminder implements Serializable {
         targetTime = time;
         remindTime = calculateReminderTime();
         userId = uId;
+        isLiked = false;
     }
     public Location getLastKnownLocation() {return lastKnownLocation;}
 
@@ -105,5 +107,25 @@ public class Reminder implements Serializable {
         Store location = new Store(this.location);
         long queueTime = location.queueTime();
         return targetTime.minusMinutes(queueTime+10);
+    }
+
+    public void like() {
+        isLiked = true;
+    }
+
+    public boolean isThisLiked() {
+        return isLiked;
+    }
+
+    @Override
+    public int compareTo(Reminder o) {
+        LocalDateTime other = o.getTargetTime();
+        if(targetTime.isAfter(other)) {
+            return 1;
+        } else if(targetTime.isEqual(other)) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 }
