@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
         assert loginFailure != null;
         loginFailure.setOnClickListener(v -> {
+            mAuth.signOut();
             Intent in = new Intent(LoginActivity.this, HomepageActivity.class);
             startActivity(in);
         });
@@ -149,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
             loginViewModel.login(usernameEditText.getText().toString(),
                     passwordEditText.getText().toString());
             Intent in;
-            loginViewModel.getLoginSuccess(); //testline
             if(loginViewModel.getLoginSuccess()) {
                 in = new Intent(LoginActivity.this, HomepageActivity.class);
                 startActivity(in);

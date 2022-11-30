@@ -58,13 +58,14 @@ public class AccountPage extends AppCompatActivity {
         });;
 
         imageView.setClickable(true);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent next = new Intent(AccountPage.this, ImagePicker.class);
-                next.putExtra("Email", mAuth.getCurrentUser().getEmail());
-                startActivity(next);
-            }
+        imageView.setOnClickListener(v -> {
+           if (mAuth.getCurrentUser() != null) {
+               Intent next = new Intent(AccountPage.this, ImagePicker.class);
+               next.putExtra("Email", mAuth.getCurrentUser().getEmail());
+               next.putExtra("calledFrom", "here");
+
+               startActivity(next);
+           }
         });
     }
 
