@@ -15,7 +15,9 @@ import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.villageplanner.HomeLogic.HomepageActivity;
+import com.example.villageplanner.ImagePicker;
 import com.example.villageplanner.R;
+import com.example.villageplanner.createAccount.CreateAccount;
 import com.example.villageplanner.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,6 +56,16 @@ public class AccountPage extends AppCompatActivity {
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         storageRef.child("/UserProfilePictures").child(email + "_pic").getDownloadUrl().addOnSuccessListener(uri -> Glide.with(getApplicationContext()).load(uri).into(imageView)).addOnFailureListener(exception -> {
         });;
+
+        imageView.setClickable(true);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent next = new Intent(AccountPage.this, ImagePicker.class);
+                next.putExtra("Email", mAuth.getCurrentUser().getEmail());
+                startActivity(next);
+            }
+        });
     }
 
     public void goToHomepage(View view) {

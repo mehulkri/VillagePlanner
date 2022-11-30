@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
             loginViewModel.login(usernameEditText.getText().toString(),
                     passwordEditText.getText().toString());
             Intent in;
+            loginViewModel.getLoginSuccess(); //testline
             if(loginViewModel.getLoginSuccess()) {
                 in = new Intent(LoginActivity.this, HomepageActivity.class);
                 startActivity(in);
