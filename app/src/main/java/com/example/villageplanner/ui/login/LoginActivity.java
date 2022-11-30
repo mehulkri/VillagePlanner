@@ -76,8 +76,9 @@ public class LoginActivity extends AppCompatActivity {
                     .build();
         gsc = GoogleSignIn.getClient(this, gso);
 
-
-
+        if (mAuth.getCurrentUser() != null) {
+            goToHomepage();
+        }
 
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {

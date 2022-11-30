@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.villageplanner.HomeLogic.HomepageActivity;
+import com.example.villageplanner.accountManager.AccountPage;
 import com.example.villageplanner.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +38,7 @@ public class ImagePicker extends AppCompatActivity {
     private ImageView IVPreviewImage;
     private Uri image;
     private StorageReference storageRef;
+    private String calledFrom = "";
 
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -78,6 +81,7 @@ public class ImagePicker extends AppCompatActivity {
                     FirebaseAuth auth = FirebaseAuth.getInstance();
                     String email = getIntent().getStringExtra("Email");
                     String name = getIntent().getStringExtra("Name");
+                    String calledFrom = getIntent().getStringExtra("calledFrom");
                     if(email == null) {
                         email = "guest@usc.edu";
                     }
@@ -107,8 +111,14 @@ public class ImagePicker extends AppCompatActivity {
                                             });
 
                                     Toast.makeText(ImagePicker.this, "Image Upload was successful", Toast.LENGTH_SHORT).show();
-                                    Intent in = new Intent(ImagePicker.this, LoginActivity.class);
-                                    startActivity(in);
+                                    if (calledFrom.equals("createAccount")) {
+                                        Intent i = new Intent(ImagePicker.this, HomepageActivity.class);
+                                        startActivity(i);
+                                    }
+                                    else {
+                                        Intent i = new Intent(ImagePicker.this, AccountPage.class);
+                                        startActivity(i);
+                                    }
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

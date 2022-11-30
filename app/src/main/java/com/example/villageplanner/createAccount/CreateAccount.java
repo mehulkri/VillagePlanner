@@ -94,6 +94,7 @@ public class CreateAccount extends AppCompatActivity {
                     Intent next = new Intent(CreateAccount.this, ImagePicker.class);
                     next.putExtra("Email", getInfo(email));
                     next.putExtra("Name", getInfo(name));
+                    next.putExtra("calledFrom", "createAccount");
                     startActivity(next);
                 }
             }
