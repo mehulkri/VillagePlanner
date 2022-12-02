@@ -89,7 +89,6 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         if (locationPermissionGranted) {
             mMap.setMyLocationEnabled(true);
             getDeviceLocation();
-
         }
     }
 
@@ -131,7 +130,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.getResult();
                         if (lastKnownLocation != null) {
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(lastKnownLocation.getLatitude(),
                                             lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                             locationAvailable = true;
