@@ -25,6 +25,8 @@ import com.example.villageplanner.ReminderLogic.ReminderPage;
 import com.example.villageplanner.Store;
 import com.example.villageplanner.directionHelpers.FetchURL;
 import com.example.villageplanner.directionHelpers.TaskLoadedCallback;
+import com.example.villageplanner.directionHelpersTime.FetchURLTime;
+import com.example.villageplanner.directionHelpersTime.TaskLoadedCallbackTime;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,7 +50,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class HomepageActivity extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback {
+public class HomepageActivity extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback, TaskLoadedCallbackTime {
 
     private GoogleMap mMap;
     FusedLocationProviderClient mFusedLocationClient;
@@ -162,7 +164,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         getDeviceLocation();
         Spinner storeSpinner = (Spinner) findViewById(R.id.store);
         String storeName = String.valueOf(storeSpinner.getSelectedItem());
-        //TODO: Use STore map here instead
+        //TODO: Use Store map here instead
         Store store = new Store(storeName);
 
         MarkerOptions storeMarker= new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).title(storeName);
@@ -184,7 +186,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         String url = getUrl(myMarker.getPosition(), storeMarker.getPosition(), "walking");
         System.out.println(url);
         new FetchURL(HomepageActivity.this).execute(url, "walking");
-
+        new FetchURLTime(HomepageActivity.this).execute(url, "walking");
         String eta = String.valueOf(store.queueTime()) + " minutes";
         TextView routingDisplay = (TextView) findViewById (R.id.routingdisplay);
         routingDisplay.setText(eta);
@@ -208,6 +210,11 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         }
         currPolyline = mMap.addPolyline((PolylineOptions) values[0]);
         System.out.println(values.getClass());
+    }
+
+    public void onTaskDoneTime(Object... values) {
+        TextView routingDisplay = (TextView) findViewById (R.id.routingdisplay);
+        routingDisplay.setText((String) values[0]);
     }
 
     public void goToReminders(View view) {
