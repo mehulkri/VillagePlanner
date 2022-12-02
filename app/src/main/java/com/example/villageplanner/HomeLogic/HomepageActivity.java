@@ -45,6 +45,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.HashMap;
 import java.util.Stack;
 
 public class HomepageActivity extends FragmentActivity implements OnMapReadyCallback, TaskLoadedCallback {
@@ -61,6 +62,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
     private CameraPosition cameraPosition;
     private Stack<Marker> markers;
     Polyline currPolyline;
+    private HashMap<String, Store> storeMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
         setContentView(R.layout.activity_home_page);
+        //TODO: Create Store Map
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -160,6 +163,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         getDeviceLocation();
         Spinner storeSpinner = (Spinner) findViewById(R.id.store);
         String storeName = String.valueOf(storeSpinner.getSelectedItem());
+        //TODO: Use STore map here instead
         Store store = new Store(storeName);
 
         MarkerOptions storeMarker= new MarkerOptions().position(new LatLng(store.getLatitude(), store.getLongitude())).title(storeName);
@@ -181,6 +185,7 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         String url = getUrl(myMarker.getPosition(), storeMarker.getPosition(), "walking");
         System.out.println(url);
         new FetchURL(HomepageActivity.this).execute(url, "walking");
+
         String eta = String.valueOf(store.queueTime()) + " minutes";
         TextView routingDisplay = (TextView) findViewById (R.id.routingdisplay);
         routingDisplay.setText(eta);
