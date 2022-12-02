@@ -29,11 +29,27 @@ public class TimeHelper {
     // Returns true reminder has expired
     public static boolean isExpired(Reminder notify) {
         if(notify != null) {
-            LocalDateTime remindT = notify.getRemindTime();
-            LocalDateTime nowIsh = LocalDateTime.now().plusMinutes(10);
-            return nowIsh.isAfter(remindT);
+            LocalDateTime target = notify.getTargetTime().plusMinutes(10);
+            LocalDateTime nowIsh = LocalDateTime.now();
+            return nowIsh.isAfter(target);
         } else {
             return false;
+        }
+    }
+
+    // -1: Not expired, 0: Remind time has pass, but target time has not passed, 1: Expired
+    // (target time has passed)
+    public static int expiryStatus(Reminder notify) {
+        if(isExpired(notify)) {
+            return 1;
+        } else {
+            LocalDateTime nowIsh = LocalDateTime.now();
+            LocalDateTime remind = notify.getRemindTime();
+            if(nowIsh.isAfter(remind)) {
+                return 0;
+            } else {
+                return -1;
+            }
         }
     }
 }

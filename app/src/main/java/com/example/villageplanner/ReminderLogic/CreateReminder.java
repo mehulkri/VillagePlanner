@@ -99,15 +99,12 @@ public class CreateReminder extends AppCompatActivity {
         arrivalDate = (TextView) findViewById(R.id.dateArrive);
         if(remind == null) {
             setDateText(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth() );
-            year = LocalDate.now().getYear();
-            month =  LocalDate.now().getMonthValue();
-            day = LocalDateTime.now().getDayOfMonth();
-            hour = LocalDateTime.now().getHour();
-            minute = (LocalDateTime.now().getMinute() + 10) % 60;
+            setTimeVariables(LocalDateTime.now());
         } else {
             LocalDateTime target = remind.getTargetTime();
             setDateText(target.getYear(), target.getMonthValue(), target.getDayOfMonth());
             setTimeText(target.getHour(), target.getMinute());
+            setTimeVariables(target);
         }
         arrivalDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,5 +273,13 @@ public class CreateReminder extends AppCompatActivity {
     private void setDateText(int year, int month, int day) {
         arrivalDate.setText(String.format(Locale.getDefault(),
                 "%02d/%02d/%04d", month, day, year));
+    }
+
+    private void setTimeVariables(LocalDateTime time) {
+        year = time.getYear();
+        month =  time.getMonthValue();
+        day = time.getDayOfMonth();
+        hour = time.getHour();
+        minute = (time.getMinute() + 10) % 60;
     }
 }

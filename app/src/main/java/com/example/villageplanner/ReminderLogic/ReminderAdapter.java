@@ -1,12 +1,17 @@
 package com.example.villageplanner.ReminderLogic;
 
+import static com.example.villageplanner.helperAPI.TimeHelper.expiryStatus;
+
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.villageplanner.R;
@@ -25,6 +30,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public TextView location;
         public TextView time;
         public ImageView icon;
+        public RelativeLayout main;
 
         public RemindViewHolder(View v) {
             super(v);
@@ -33,6 +39,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             location = (TextView) v.findViewById(R.id.author);
             time = (TextView) v.findViewById(R.id.remind_time);
             icon = (ImageView) v.findViewById(R.id.like_or_love);
+            main = (RelativeLayout) v.findViewById(R.id.summary);
         }
     }
 
@@ -75,7 +82,14 @@ public class ReminderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(item.isThisLiked()) {
             vh.icon.setVisibility(View.VISIBLE);
         }
-
+        int status = expiryStatus(item);
+        int[] colors = {Color.parseColor("#FB8C00"), Color.parseColor("#FF313A")};
+        if(status >= 0) {
+            int textColor = Color.WHITE;
+            vh.time.setTextColor(textColor);
+            vh.titleView.setTextColor(textColor);
+            vh.location.setTextColor(textColor);
+            vh.main.setBackgroundColor(colors[status]);
+        }
     }
-
 }

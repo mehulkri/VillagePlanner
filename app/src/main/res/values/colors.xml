@@ -14,5 +14,6 @@
     <color name="accent">#33b5e5</color>
     <color name="divider">#CCC</color>
     <color name="icons">#FFF</color>
+    <color name="warning">#FB8C00</color>
     <color name="item_background">#FFF</color>
 </resources>
