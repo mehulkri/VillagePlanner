@@ -3,6 +3,7 @@ package com.example.villageplanner;
 
 public class Store {
     private final String name;
+    private int qtime;
     // openingTimes[day #] = hour at which the store opens
     // closingTimes[day #] = hour at which the store closes
     // e.g. openingTimes[1] = 8.25 means store opens 8:15am on Monday
@@ -12,6 +13,7 @@ public class Store {
 
     public Store(String id) {
         name = id;
+        qtime = -1; // uninitialized
         id = id.toLowerCase();
         switch (id) {
             case "amazon locker":
@@ -202,13 +204,11 @@ public class Store {
     }
 
     public long queueTime(){ // returned in minutes
-//        if (isClosed(time)) {
-//            return -1;
-//        }
-//        else{
-//            int upper = 20;
-//            int lower = 10;
-            return (long) ((long) closingTime - openingTime);
-//        }
+        if (qtime == -1){
+            int upper = 20;
+            int lower = 10;
+            qtime = (int) (Math.random() * (upper - lower)) + lower;
+        }
+        return qtime;
     }
 }
