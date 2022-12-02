@@ -34,6 +34,6 @@ public class ReminderHelper {
     }
 
     public static boolean reminderReadyToBeDisplayed(Reminder remind, List<Reminder> reminders) {
-        return isInReminders(remind, reminders) & checkExpirationAndRemove(remind);
+        return !isInReminders(remind, reminders) & checkExpirationAndRemove(remind);
     }
 }

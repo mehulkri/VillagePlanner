@@ -138,6 +138,8 @@ public class ReminderPage extends AppCompatActivity {
                     // whenever data at this location is updated.
                     if(dataSnapshot == null) {
                         displaySnackbar("Firebase could not get reminders", null, null);
+                    } else if(dataSnapshot.getChildrenCount() == 0) {
+                        displaySnackbar("No reminders present", null, null);
                     } else {
                         for(DataSnapshot child : dataSnapshot.getChildren()) {
                             Reminder remind  = dataSnapshotToReminder(child);
@@ -232,9 +234,5 @@ public class ReminderPage extends AppCompatActivity {
                 AlarmManager.INTERVAL_DAY*365,pendingIntent);
         Toast.makeText(this, "Alarm set Successfully", Toast.LENGTH_SHORT).show();
         populate();
-    }
-
-    private void reorderReminders() {
-
     }
 }

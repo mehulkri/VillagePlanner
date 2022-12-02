@@ -19,3 +19,12 @@ VillagePlanner is an Android application that seeks to make the user's experienc
 7. Run the app and enjoy (if login does not work, use guest login).
 
 Note: If firebase connection is not live, it will not display reminders.
+
+## Improved Capabilities
+
+1. Reminders can be more reliably loaded, added, edited, and deleted. In the previous iteration, the reminders were "buggy" according to Jack Jobes
+2. Sucessful uploading and storing of profile picture images on Firebase
+3. Fixed bugs associated with notifications not popping up
+4. Sorting of reminders by arrival time on reminders page
+5. Ability to like reminders and have a heart show up on the reminders
+6. Colors to indicate reminder status. Red means it has been passed a reminder's arrival time, orange means it is between the arrival time and leave time, and white means it is before the leave time.
