@@ -22,6 +22,7 @@
 
         <activity
             android:name=".HomeLogic.HomepageActivity"
+            android:label="USC Village"
             android:exported="true">
         </activity>
 
@@ -40,7 +41,8 @@
         </activity>
         <activity
             android:name=".accountManager.AccountPage"
-            android:exported="false" />
+            android:exported="false"
+            android:label="My Account" />
         <activity
             android:name=".ReminderLogic.CreateReminder"
             android:exported="false"
@@ -56,7 +58,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_login_page">
+            android:label="Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
