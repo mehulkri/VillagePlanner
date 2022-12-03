@@ -1,20 +1,28 @@
 package com.example.villageplanner;
 
 
+import java.time.LocalDateTime;
+import java.util.Random;
+
 public class Store {
     private final String name;
-    private int qtime;
     // openingTimes[day #] = hour at which the store opens
     // closingTimes[day #] = hour at which the store closes
     // e.g. openingTimes[1] = 8.25 means store opens 8:15am on Monday
     // latitude and longitude describe physical location on globe
     private final double openingTime, closingTime;
     private final double latitude, longitude;
+    private int qtime;
 
     public Store(String id) {
-        name = id;
-        qtime = -1; // uninitialized
         id = id.toLowerCase();
+        name = id;
+        // initialize queue time
+        Random r = new Random();
+        r.setSeed(id.hashCode());
+        int LO = 10;
+        int HI = 20;
+        qtime = r.nextInt(HI-LO) + LO;
         switch (id) {
             case "amazon locker":
                 openingTime=9;
@@ -194,21 +202,22 @@ public class Store {
     public boolean isClosed(double time){
         if (closingTime > openingTime) {
             // want to ensure time is in interval (openingTime, closingTime)
-            return (time < closingTime && time > openingTime);
+            return !(time < closingTime && time > openingTime);
         }
         else {
             // store closes after midnight
             // want to ensure time is in interval (openingTime, 24) OR (0, closingTime)
-            return (time > openingTime || time < closingTime);
+            return !(time > openingTime || time < closingTime);
         }
     }
 
     public long queueTime(){ // returned in minutes
-        if (qtime == -1){
-            int upper = 20;
-            int lower = 10;
-            qtime = (int) (Math.random() * (upper - lower)) + lower;
+        double hour = LocalDateTime.now().getHour();
+        if (isClosed(hour)){
+            return 0;
         }
-        return qtime;
+        else{
+            return qtime;
+        }
     }
 }

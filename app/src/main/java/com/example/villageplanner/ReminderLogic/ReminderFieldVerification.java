@@ -46,7 +46,7 @@ public class ReminderFieldVerification {
         Store loc = new Store(location);
         String error = "";
         double time = hour + (minute/60);
-        if(!loc.isClosed(time)) {
+        if(loc.isClosed(time)) {
             error += location + " is not open at this hour. Please choose a different time.";
         }
         return error;

@@ -187,7 +187,11 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
         System.out.println(url);
         new FetchURL(HomepageActivity.this).execute(url, "walking");
         new FetchURLTime(HomepageActivity.this).execute(url, "walking");
-        String eta = String.valueOf(store.queueTime()) + " minutes";
+        int qtime = (int) store.queueTime();
+        String qstring = (qtime != 0) ? String.valueOf(qtime) + " mins" : "Closed";
+        String tstring = "...";
+        String eta = "Queue: " + qstring + " | " +
+                "Travel: " + tstring;
         TextView routingDisplay = (TextView) findViewById (R.id.routingdisplay);
         routingDisplay.setText(eta);
     }
@@ -214,7 +218,12 @@ public class HomepageActivity extends FragmentActivity implements OnMapReadyCall
 
     public void onTaskDoneTime(Object... values) {
         TextView routingDisplay = (TextView) findViewById (R.id.routingdisplay);
-        routingDisplay.setText((String) values[0]);
+        String dispText = (String) routingDisplay.getText();
+        String tstring = (String) values[0];
+        dispText = dispText.substring(0, dispText.length() - 3);
+        dispText += tstring;
+//        routingDisplay.setText((String) values[0]);
+        routingDisplay.setText(dispText);
     }
 
     public void goToReminders(View view) {

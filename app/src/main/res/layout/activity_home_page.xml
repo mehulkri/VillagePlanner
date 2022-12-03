@@ -64,12 +64,12 @@
                 android:onClick="buttonClick"
                 android:text="@string/route" />
 
-            <TextView
-                android:id="@+id/routingdisplay"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:textSize="30sp" />
+        <TextView
+            android:id="@+id/routingdisplay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
