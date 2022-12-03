@@ -23,7 +23,7 @@ Note: If firebase connection is not live, it will not display reminders.
 ## Improved Capabilities since 2.4
 
 1. Reminders can be more reliably loaded, added, edited, and deleted. In the previous iteration, the reminders were "buggy" according to Jack Jobes
-2. Sucessful uploading and storing of profile picture images on Firebase
+2. Successful uploading and storing of profile picture images on Firebase
 3. Fixed bugs associated with notifications not popping up
 4. Sorting of reminders by arrival time on reminders page
 5. Ability to like reminders and have a heart show up on the reminders
@@ -32,3 +32,6 @@ Note: If firebase connection is not live, it will not display reminders.
 8. Account page has been added. This page allows the user to sign out and change their profile picture.
 9. Routing now accurately displays the travel time, as calculated by the Google Directions API.
 10. Routing also displays the queue time of the store being routed to.
+11. Queue times (which are semi-randomized) have been made more consistent (asking twice for the same store's queue time gives the same result).
+12. Can now move from the reminder page to the home page.
+13. Cosmetic inconsistencies and hiccups fixed (app looks nicer).
